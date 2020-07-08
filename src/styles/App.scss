@@ -1,0 +1,52 @@
+@import 'Variables';
+@import 'properties/Index';
+
+.btn.text-brown,
+.text-brown {
+  color: $brand-brown;
+  &:hover {
+    color: $brand-dark-brown;
+  }
+}
+
+.btn.btn-outline-warning {
+  border-color: $brand-brown;
+  color: $brand-brown;
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:hover,
+  &:not(:disabled):not(.disabled).active,
+  &:not(:disabled):not(.disabled):active {
+    color: white;
+    background-color: $brand-brown;
+    border-color: $brand-brown;
+  }
+}
+
+.btn.btn-warning {
+  background: $brand-brown;
+  color: white;
+  border-color: $brand-brown;
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:hover,
+  &:not(:disabled):not(.disabled).active,
+  &:not(:disabled):not(.disabled):active {
+    color: white;
+    background-color: $brand-dark-brown;
+    border-color: $brand-brown;
+  }
+}
+
+a.hover-brown {
+  &:hover,
+  &:focus {
+    color: $brand-dark-brown;
+  }
+}

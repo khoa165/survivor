@@ -1,0 +1,25 @@
+$left: 'left';
+$right: 'right';
+$top: 'top';
+$bottom: 'bottom';
+$horizontal: 'x-axis';
+$vertical: 'y-axis';
+
+@mixin custom-margin($side, $number) {
+  $firstLetter: str-slice($side, 0, 1);
+
+  .m-#{$firstLetter}-#{$number} {
+    @if $firstLetter == 'x' {
+      margin-left: #{$number}px;
+      margin-right: #{$number}px;
+    } @else if $firstLetter == 'y' {
+      margin-top: #{$number}px;
+      margin-bottom: #{$number}px;
+    } @else {
+      margin-#{$side}: #{$number}px !important;
+    }
+  }
+}
+
+@include custom-margin($top, 20);
+@include custom-margin($top, 10);
