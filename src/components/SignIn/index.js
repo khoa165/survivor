@@ -1,6 +1,4 @@
 import React from 'react';
-import { Row, Col } from 'reactstrap';
-import { ToastContainer } from 'react-toastify';
 
 import SignInFormBase from './SignInFormBase';
 import SignInGoogleBase from './SignInGoogleBase';
@@ -18,32 +16,22 @@ const SignInFacebook = compose(withRouter, withFirebase)(SignInFacebookBase);
 const SignInTwitter = compose(withRouter, withFirebase)(SignInTwitterBase);
 
 const SignIn = () => (
-  <Row>
-    <ToastContainer />
+  <div className='authenticate-form'>
+    <SignInForm />
+    <ForgotPasswordAction />
+    <SignUpAction />
 
-    <Col
-      xs={{ size: 8, offset: 2 }}
-      md={{ size: 6, offset: 3 }}
-      lg={{ size: 3, offset: 8 }}
-    >
-      <div className='authenticate-form'>
-        <SignInForm />
-        <ForgotPasswordAction />
-        <SignUpAction />
-
-        <div className='signInLineBreak mt-5 mb-4'>
-          <hr />
-          <div>
-            <p className='text-muted'>Social media login</p>
-          </div>
-        </div>
-
-        <SignInGoogle />
-        <SignInFacebook />
-        <SignInTwitter />
+    <div className='signInLineBreak mt-5 mb-4'>
+      <hr />
+      <div>
+        <p className='text-muted'>Social media login</p>
       </div>
-    </Col>
-  </Row>
+    </div>
+
+    <SignInGoogle />
+    <SignInFacebook />
+    <SignInTwitter />
+  </div>
 );
 
 export default SignIn;

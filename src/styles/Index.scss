@@ -1,5 +1,6 @@
 @import 'Variables';
-@import 'Form.scss';
+@import 'Form';
+@import 'Landing';
 
 body,
 html {
@@ -11,7 +12,6 @@ html {
   -o-animation: fadein 3s; /* Opera < 12.1 */
   animation: fadein 3s;
   scroll-behavior: smooth;
-  min-height: 100vh;
 }
 
 body,
@@ -72,4 +72,24 @@ html,
   to {
     opacity: 1;
   }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #6c757d;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #08fdd8;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #08fdd8;
 }

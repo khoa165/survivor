@@ -1,11 +1,11 @@
 .authenticate-form {
   background: white;
-  border: 1px solid #d8dee2;
+  border: 1px solid white;
   border-radius: 5px;
-  margin-top: 10px;
   padding: 15px 15px 20px 15px;
   max-width: 400px;
   text-align: center;
+  z-index: 100;
 }
 
 .other-account-action {
@@ -14,10 +14,10 @@
   border-radius: 5px;
   margin-top: 15px;
   padding: 15px 15px 0 15px;
-}
 
-.other-account-action p {
-  display: inline-block;
+  p {
+    display: inline-block;
+  }
 }
 
 .active.item {
@@ -37,11 +37,19 @@
   }
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset !important;
+}
+
 .form-label {
   font-size: 13px;
   position: absolute;
   top: -10px;
-  left: calc(50% - 178px);
+  left: calc(50% - 154px);
   padding: 0 5px;
   background: #fff;
   z-index: 50;

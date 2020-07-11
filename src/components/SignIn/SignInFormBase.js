@@ -4,9 +4,6 @@ import { toast } from 'react-toastify';
 
 import * as ROUTES from '../../constants/routes';
 
-import 'react-toastify/dist/ReactToastify.css';
-import '../../styles/Form.scss';
-
 const INITIAL_STATE = {
   email: '',
   password: '',

@@ -1,40 +1,24 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React, { Fragment } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import Navigation from '../Navigation';
-import LandingPage from '../Landing';
-import SignUpPage from '../SignUp';
-import SignInPage from '../SignIn';
-import PasswordForgetPage from '../PasswordForget';
-import HomePage from '../Home';
-import AccountPage from '../Account';
-import AdminPage from '../Admin';
 
-import * as ROUTES from '../../constants/routes';
+import Landing from '../Landing';
+import Routes from '../Routing';
+
 import { withAuthentication } from '../Session';
 
 import '../../styles/App.scss';
 
 const App = () => (
   <Router>
-    <div>
+    <Fragment>
       <ToastContainer />
-      <Navigation />
-
-      <hr />
-
-      <Route exact path={ROUTES.LANDING} component={LandingPage} />
-      <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
-      <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
-      <Route
-        exact
-        path={ROUTES.PASSWORD_FORGET}
-        component={PasswordForgetPage}
-      />
-      <Route exact path={ROUTES.HOME} component={HomePage} />
-      <Route exact path={ROUTES.ACCOUNT} component={AccountPage} />
-      <Route exact path={ROUTES.ADMIN} component={AdminPage} />
-    </div>
+      <Switch>
+        {/* Landing page does not have navbar and does not need container, all other pages require them. */}
+        <Route exact path='/' component={Landing} />
+        <Route component={Routes} />
+      </Switch>
+    </Fragment>
   </Router>
 );
 

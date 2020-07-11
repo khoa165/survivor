@@ -1,35 +1,23 @@
-@import 'Variables';
-
-#landing-page {
+#landing-survivor {
   height: 100vh;
-  background: url('https://images.unsplash.com/photo-1456324504439-367cee3b3c32?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80')
-    no-repeat center center;
+  width: 100%;
+  background: url('https://wallpapercave.com/wp/wp5083769.jpg') no-repeat center
+    center;
   background-size: cover;
-  text-align: center;
-  color: #eee;
 
   .overlay {
-    background: rgba(200, 120, 120, 0.2);
+    background: rgba(255, 255, 255, 0.3);
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    position: relative;
   }
 
-  .content {
-    background: rgba(156, 85, 24, 0.7);
-    // background: rgba(30, 120, 250, 0.7);
-    margin: 40vh auto;
-    padding: 40px;
-  }
-
-  .btn {
-    width: 150px;
-  }
-
-  h1 {
-    font-weight: bold;
-    font-size: 50px;
+  .landing-modal-button {
+    position: absolute;
+    top: 3vh;
+    left: calc(50% - 135px);
   }
 }
