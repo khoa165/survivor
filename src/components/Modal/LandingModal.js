@@ -4,9 +4,15 @@ import Typist from 'react-typist';
 import Cursor from 'react-typist';
 
 const LandingModal = (props) => {
-  const { buttonLabel, modalTitle, modalClasses, children } = props;
+  const {
+    buttonLabel,
+    modalTitle,
+    modalClasses,
+    children,
+    openLoginForm,
+  } = props;
 
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(openLoginForm);
   const toggle = () => setModal(!modal);
 
   return (

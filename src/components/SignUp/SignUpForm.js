@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Form, FormGroup, Input, Label } from 'reactstrap';
 import { notifySuccess, notifyErrors } from '../../utils/Toast';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -120,97 +120,95 @@ const SignUpForm = (props) => {
   };
 
   return (
-    <Row>
-      <Col
-        xs={{ size: 8, offset: 2 }}
-        md={{ size: 6, offset: 3 }}
-        lg={{ size: 3, offset: 8 }}
-      >
-        <div className='authenticate-form'>
-          <Form onSubmit={onSubmit} autoComplete='off'>
-            <h3 className='text-center text-brown mb-4'>Account Register</h3>
-            <FormGroup>
-              <Label for='signUpEmailField' className='form-label'>
-                Email
-              </Label>
-              <Input
-                type='email'
-                name='email'
-                id='signUpEmailField'
-                value={email}
-                onChange={onChange}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for='signUpUsernameField' className='form-label'>
-                Username
-              </Label>
-              <Input
-                type='text'
-                name='username'
-                id='signUpUsernameField'
-                value={username}
-                onChange={onChange}
-                placeholder='Unique identifier to your account'
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for='signUpFullnameField' className='form-label'>
-                Full name
-              </Label>
-              <Input
-                type='text'
-                name='fullname'
-                id='signUpFullnameField'
-                value={fullname}
-                onChange={onChange}
-                placeholder='(Optional) Let others know how to address you'
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for='signUpPasswordField' className='form-label'>
-                Password
-              </Label>
-              <Input
-                type='password'
-                name='password'
-                id='signUpPasswordField'
-                value={password}
-                onChange={onChange}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for='signUpConfirmedPasswordField' className='form-label'>
-                Confirm password
-              </Label>
-              <Input
-                type='password'
-                name='confirmedPassword'
-                id='signUpConfirmedPasswordField'
-                value={confirmedPassword}
-                onChange={onChange}
-                required
-              />
-            </FormGroup>
-            <Input
-              type='submit'
-              value='Register and explore Survivor world'
-              className='btn btn-warning btn-block submitFormButton'
-            />
-          </Form>
-          <div className='other-account-action'>
-            <p className='text-secondary'>Already have an account?</p>
-            <Link to={ROUTES.SIGN_IN} className='hover-brown text-brown ml-2'>
-              Sign in
-            </Link>
-          </div>
-        </div>
-      </Col>
-    </Row>
+    <div className='authenticate-form'>
+      <Form onSubmit={onSubmit} autoComplete='off'>
+        <h3 className='text-center text-brown mb-4'>Account Register</h3>
+        <FormGroup>
+          <Label for='signUpEmailField' className='form-label'>
+            Email
+          </Label>
+          <Input
+            type='email'
+            name='email'
+            id='signUpEmailField'
+            value={email}
+            onChange={onChange}
+            required
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for='signUpUsernameField' className='form-label'>
+            Username
+          </Label>
+          <Input
+            type='text'
+            name='username'
+            id='signUpUsernameField'
+            value={username}
+            onChange={onChange}
+            placeholder='Unique identifier to your account'
+            required
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for='signUpFullnameField' className='form-label'>
+            Full name
+          </Label>
+          <Input
+            type='text'
+            name='fullname'
+            id='signUpFullnameField'
+            value={fullname}
+            onChange={onChange}
+            placeholder='(Optional) Let others know how to address you'
+            required
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for='signUpPasswordField' className='form-label'>
+            Password
+          </Label>
+          <Input
+            type='password'
+            name='password'
+            id='signUpPasswordField'
+            value={password}
+            onChange={onChange}
+            required
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for='signUpConfirmedPasswordField' className='form-label'>
+            Confirm password
+          </Label>
+          <Input
+            type='password'
+            name='confirmedPassword'
+            id='signUpConfirmedPasswordField'
+            value={confirmedPassword}
+            onChange={onChange}
+            required
+          />
+        </FormGroup>
+        <Input
+          type='submit'
+          value='Register and explore Survivor world'
+          className='btn btn-warning btn-block submitFormButton'
+        />
+      </Form>
+      <div className='other-account-action'>
+        <p className='text-secondary'>Already have an account?</p>
+        <Link
+          to={{
+            pathname: ROUTES.LANDING,
+            state: { form: ROUTES.SIGN_IN },
+          }}
+          className='hover-brown text-brown ml-2'
+        >
+          Sign in
+        </Link>
+      </div>
+    </div>
   );
 };
 

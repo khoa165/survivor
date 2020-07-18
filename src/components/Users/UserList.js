@@ -25,7 +25,9 @@ const UserList = ({ firebase }) => {
     return () => {
       firebase.users().off();
     };
-  }, [firebase]);
+
+    // eslint-disable-next-line
+  }, []);
 
   return loading ? (
     <Spinner />
@@ -73,7 +75,7 @@ const UserList = ({ firebase }) => {
                 <Link
                   className='text-dark'
                   to={{
-                    pathname: `${ROUTES.ADMIN}/${user.uid}`,
+                    pathname: `${ROUTES.ADMIN_MANAGE_USERS}/${user.uid}`,
                     state: { user },
                   }}
                 >

@@ -45,46 +45,49 @@ const PasswordForgetForm = (props) => {
   };
 
   return (
-    <Row>
-      <ToastContainer />
-      <Col
-        xs={{ size: 8, offset: 2 }}
-        md={{ size: 6, offset: 3 }}
-        lg={{ size: 3, offset: 8 }}
-      >
-        <div className='authenticate-form'>
-          <Form onSubmit={onSubmit}>
-            <FormGroup>
-              <Input
-                type='email'
-                name='email'
-                value={email}
-                placeholder='Please enter a valid email'
-                onChange={onChange}
-                required
-              />
-            </FormGroup>
-            <Input
-              type='submit'
-              value='Retrieve your Survivor fan identity'
-              className='btn btn-outline-warning btn-block submitFormButton'
-            />
-          </Form>
-          <div className='other-account-action'>
-            <p className='text-secondary'>Already have an account?</p>
-            <Link to={ROUTES.SIGN_IN} className='hover-brown text-brown ml-2'>
-              Sign in
-            </Link>
-          </div>
-          <div className='other-account-action'>
-            <p className='text-secondary'>Are you a new Survivor fan?</p>
-            <Link to={ROUTES.SIGN_UP} className='hover-brown text-brown ml-2'>
-              Sign up
-            </Link>
-          </div>
-        </div>
-      </Col>
-    </Row>
+    <div className='authenticate-form'>
+      <Form onSubmit={onSubmit}>
+        <FormGroup>
+          <Input
+            type='email'
+            name='email'
+            value={email}
+            placeholder='Please enter a valid email'
+            onChange={onChange}
+            required
+          />
+        </FormGroup>
+        <Input
+          type='submit'
+          value='Retrieve your Survivor fan identity'
+          className='btn btn-outline-warning btn-block submitFormButton'
+        />
+      </Form>
+      <div className='other-account-action'>
+        <p className='text-secondary'>Already have an account?</p>
+        <Link
+          to={{
+            pathname: ROUTES.LANDING,
+            state: { form: ROUTES.SIGN_IN },
+          }}
+          className='hover-brown text-brown ml-2'
+        >
+          Sign in
+        </Link>
+      </div>
+      <div className='other-account-action'>
+        <p className='text-secondary'>Are you a new Survivor fan?</p>
+        <Link
+          to={{
+            pathname: ROUTES.LANDING,
+            state: { form: ROUTES.SIGN_UP },
+          }}
+          className='hover-brown text-brown ml-2'
+        >
+          Sign up
+        </Link>
+      </div>
+    </div>
   );
 };
 

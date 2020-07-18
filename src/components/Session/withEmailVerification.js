@@ -39,9 +39,9 @@ const withEmailVerification = (Component) => {
     render() {
       return (
         <AuthUserContext.Consumer>
-          {(authUser) =>
-            this.needsEmailVerification(authUser) ||
-            this.hasEmailVerifiedField(authUser) ? (
+          {(authUser) => {
+            return this.needsEmailVerification(authUser) &&
+              !this.hasEmailVerifiedField(authUser) ? (
               <div>
                 {this.state.isSent ? (
                   <p>
@@ -67,8 +67,8 @@ const withEmailVerification = (Component) => {
               </div>
             ) : (
               <Component {...this.props} />
-            )
-          }
+            );
+          }}
         </AuthUserContext.Consumer>
       );
     }

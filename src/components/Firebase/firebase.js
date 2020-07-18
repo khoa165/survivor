@@ -89,11 +89,19 @@ class Firebase {
 
   // *** User API ***
 
-  user = (uid) => this.db.ref(`users/${uid}`);
-
   users = () => this.db.ref('users');
 
+  user = (uid) => this.db.ref(`users/${uid}`);
+
   usernames = () => this.db.ref('usernames');
+
+  // *** Contestant API ***
+  contestants = () => this.db.ref('contestants');
+
+  contestant = (name) => this.db.ref(`contestants/${name}`);
+
+  contestantSeasonStat = (name, appearance) =>
+    this.db.ref(`contestants/${name}/seasonsStat/${appearance - 1}`);
 }
 
 export default Firebase;

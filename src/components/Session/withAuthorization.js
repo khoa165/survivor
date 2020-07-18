@@ -6,16 +6,24 @@ import AuthUserContext from './context';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
-const withAuthorization = (condition) => (Component) => {
+const withAuthorization = (condition, unmatchedConditionMessage = '') => (
+  Component
+) => {
   class WithAuthorization extends React.Component {
     componentDidMount() {
       this.listener = this.props.firebase.onAuthUserListener(
         (authUser) => {
           if (!condition(authUser)) {
-            this.props.history.push(ROUTES.SIGN_IN);
+            this.props.history.push({
+              pathname: ROUTES.LANDING,
+              state: {
+                openLoginForm: true,
+                message: unmatchedConditionMessage,
+              },
+            });
           }
         },
-        () => this.props.history.push(ROUTES.SIGN_IN)
+        () => this.props.history.push(ROUTES.LANDING)
       );
     }
 
