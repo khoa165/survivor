@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Navigation from '../Navigation';
-import NotFound from '../NotFound';
+import Navigation from '../Layout/Navigation';
+import NotFound from '../Pages/NotFound';
 
 import UserRoutes from './UserRoutes';
 import AdminRoutes from './AdminRoutes';

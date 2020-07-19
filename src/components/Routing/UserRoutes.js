@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Route } from 'react-router-dom';
 
-import HomePage from '../Home';
+import HomePage from '../Pages/Home';
 import AccountPage from '../Account';
 
 import * as ROUTES from '../../constants/routes';

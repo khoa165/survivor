@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import Landing from '../Landing';
+import Landing from '../Pages/Landing';
 import Routes from '../Routing';
 
 import { withAuthentication } from '../Session';

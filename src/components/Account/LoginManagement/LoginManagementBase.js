@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { notifyErrors } from '../../../utils/Toast';
 import LoginToggle from './LoginToggle';
-import { AddPassword, UpdatePassword } from '../../PasswordChange';
+import { AddPassword, UpdatePassword } from '../../Auth/PasswordChange';
 import { Row } from 'reactstrap';
 const DEFAULT_SIGN_IN = {
   id: 'password',

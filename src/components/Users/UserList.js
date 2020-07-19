@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Table } from 'reactstrap';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Layout/Spinner';
 const UserList = ({ firebase }) => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
