@@ -10,6 +10,8 @@ import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 import { withFirebase } from '../../Firebase';
 
+import '../AuthForm.scss';
+
 const SignInForm = compose(withRouter, withFirebase)(SignInFormBase);
 const SignInGoogle = compose(withRouter, withFirebase)(SignInGoogleBase);
 const SignInFacebook = compose(withRouter, withFirebase)(SignInFacebookBase);

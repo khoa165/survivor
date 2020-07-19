@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import * as ROUTES from '../../../constants/routes';
 import * as ROLES from '../../../constants/roles';
-import '../../../styles/Form.scss';
+import '../AuthForm.scss';
 
 const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
 

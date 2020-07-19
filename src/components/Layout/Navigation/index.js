@@ -14,6 +14,7 @@ import { AuthUserContext } from '../../Session';
 import SignOutButton from '../../Auth/SignOut';
 import * as ROUTES from '../../../constants/routes';
 import * as ROLES from '../../../constants/roles';
+import './NavigationBar.scss';
 
 const Navigation = ({ icon, title }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,19 +23,22 @@ const Navigation = ({ icon, title }) => {
   const NavigationAuthLinks = ({ authUser }) => {
     return (
       <Fragment>
-        <NavItem>
+        <NavItem className='mr-2'>
           <Link to={ROUTES.HOME} className='nav-link'>
+            <i className='fas fa-home mr-1' />
             Home
           </Link>
         </NavItem>
-        <NavItem>
+        <NavItem className='mr-2'>
           <Link to={ROUTES.ACCOUNT} className='nav-link'>
+            <i className='fas fa-info-circle mr-1' />
             Account
           </Link>
         </NavItem>
         {!!authUser.roles[ROLES.ADMIN] && (
-          <NavItem>
+          <NavItem className='mr-2'>
             <Link to={ROUTES.ADMIN} className='nav-link'>
+              <i className='fas fa-user-lock mr-1' />
               Admin
             </Link>
           </NavItem>
@@ -47,14 +51,15 @@ const Navigation = ({ icon, title }) => {
   const NavigationPublicLinks = () => {
     return (
       <Fragment>
-        <NavItem>
+        <NavItem className='mr-2'>
           <Link to={ROUTES.SIGN_IN} className='nav-link'>
-            <i className='fas fa-users mr-1' />
+            <i className='fas fa-sign-in-alt mr-1' />
             Sign In
           </Link>
         </NavItem>
         <NavItem>
           <Link to={ROUTES.SIGN_UP} className='nav-link'>
+            <i className='fas fa-user-edit mr-1' />
             Sign Up
           </Link>
         </NavItem>
@@ -63,10 +68,11 @@ const Navigation = ({ icon, title }) => {
   };
 
   return (
-    <Navbar expand='md' id='navbar'>
+    <Navbar expand='md' id='navbar' className='py-3'>
       <Container>
         <NavbarBrand tag={Link} to={ROUTES.LANDING}>
-          <i className={`${icon} mr-1`} /> {title}
+          <i className={`${icon} mr-1`} /> {title}{' '}
+          <i className={`${icon} ml-1`} />
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -88,8 +94,8 @@ const Navigation = ({ icon, title }) => {
 };
 
 Navigation.defaultProps = {
-  title: 'App name',
-  icon: 'fas fa-code',
+  title: 'Survivor 39days',
+  icon: 'fas fa-fire',
 };
 
 Navigation.propTypes = {

@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { compose } from 'recompose';
 import Spinner from '../Spinner';
 
 const withLoading = (conditionFn) => (Component) => (props) => (

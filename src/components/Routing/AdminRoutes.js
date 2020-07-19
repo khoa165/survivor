@@ -14,7 +14,7 @@ const AdminRoutes = () => {
         path={ROUTES.ADMIN_MANAGE_USERS}
         component={AdminManageUsers}
       />
-      <Route exact path={ROUTES.ADMIN_VIEW_USER} component={AdminViewUser} />
+      <Route exact path={ROUTES.ADMIN_MANAGE_USER} component={AdminViewUser} />
     </Fragment>
   );
 };

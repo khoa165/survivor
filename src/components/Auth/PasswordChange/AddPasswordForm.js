@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { notifyErrors } from '../../../utils/Toast';
 import { Row, Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import '../AuthForm.scss';
 
 const AddPasswordForm = ({ onConnect }) => {
   // Set user data.

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { notifySuccess, notifyErrors } from '../../../utils/Toast';
 import { Row, Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import '../AuthForm.scss';
 
 const INITIAL_STATE = {
   previousPassword: '',

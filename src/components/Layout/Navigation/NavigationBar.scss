@@ -1,0 +1,15 @@
+@import '../../../styles/Variables.scss';
+
+#navbar {
+  font-weight: bolder;
+  &.navbar {
+    background: $brand-brown;
+  }
+  .nav-link,
+  .navbar-brand {
+    color: #fff;
+  }
+  .nav-item {
+    // margin-right: 10px;
+  }
+}

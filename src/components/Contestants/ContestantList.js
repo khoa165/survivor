@@ -3,7 +3,7 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
-import { Container, Table } from 'reactstrap';
+import { Table } from 'reactstrap';
 import { withLoading, withInfiniteScroll } from '../Layout/InfiniteScrollList';
 
 const colorBasedOnAppearance = (numberSeasons) => {
@@ -87,14 +87,13 @@ class ContestantList extends React.Component {
   render() {
     const { contestants, loading, listEnded } = this.state;
     return (
-      <Container className='p-0'>
-        <InfiniteScrollList
-          list={contestants}
-          loading={loading}
-          listEnded={listEnded}
-          onScroll={this.loadContestants}
-        />
-      </Container>
+      <InfiniteScrollList
+        className='p-0'
+        list={contestants}
+        loading={loading}
+        listEnded={listEnded}
+        onScroll={this.loadContestants}
+      />
     );
   }
 }
@@ -125,7 +124,7 @@ const List = ({ list }) => (
               <Link
                 className='text-dark'
                 to={{
-                  pathname: `${ROUTES.CONTESTANT_DETAIL}/${contestant.uid}`,
+                  pathname: `${ROUTES.VIEW_CONTESTANTS}/${contestant.uid}`,
                   state: { contestant },
                 }}
               >

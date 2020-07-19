@@ -6,15 +6,16 @@ import Landing from '../Pages/Landing';
 import Routes from '../Routing';
 
 import { withAuthentication } from '../Session';
+import * as ROUTES from '../../constants/routes';
 
-import '../../styles/App.scss';
+import './App.scss';
 
 const App = () => (
   <Router>
     <ToastContainer />
     <Switch>
       {/* Landing page does not have navbar and does not need container, all other pages require them. */}
-      <Route exact path='/' component={Landing} />
+      <Route exact path={ROUTES.LANDING} component={Landing} />
       <Route component={Routes} />
     </Switch>
   </Router>

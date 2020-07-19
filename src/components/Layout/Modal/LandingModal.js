@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, ModalHeader } from 'reactstrap';
 import Typist from 'react-typist';
 import Cursor from 'react-typist';
+import './Modal.scss';
 
 const LandingModal = (props) => {
   const {

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import { Row, Col, Form, FormGroup, Input } from 'reactstrap';
+import { toast } from 'react-toastify';
+import { Form, FormGroup, Input } from 'reactstrap';
 import * as ROUTES from '../../../constants/routes';
+import '../AuthForm.scss';
 
 const PasswordForgetForm = (props) => {
   const [email, setEmail] = useState('');
