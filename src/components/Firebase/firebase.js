@@ -95,13 +95,15 @@ class Firebase {
 
   usernames = () => this.db.ref('usernames');
 
-  // *** Contestant API ***
+  // *** Survivor API ***
   contestants = () => this.db.ref('contestants');
 
   contestant = (name) => this.db.ref(`contestants/${name}`);
 
   contestantSeasonStat = (name, appearance) =>
     this.db.ref(`contestants/${name}/seasonsStat/${appearance - 1}`);
+
+  winners = () => this.db.ref('winners');
 }
 
 export default Firebase;

@@ -1,0 +1,18 @@
+#homePage {
+  .jumbotron {
+    height: 30vh;
+    background: url('https://cdn.shopify.com/s/files/1/0018/7324/8355/files/CBS_collection_banner_1920x300-Survivor40_1400x.jpg?v=1580159288')
+      no-repeat 53% center;
+    background-size: cover;
+    position: relative;
+  }
+
+  .overlay {
+    background: rgba(255, 255, 255, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
