@@ -19,7 +19,7 @@ const HomePage = () => (
     </Alert>
     <Container className='d-none d-md-block'>
       <p className='lead'>Winners hall of fame</p>
-      <WinnersSlideshow />
+      {/* <WinnersSlideshow /> */}
     </Container>
   </div>
 );

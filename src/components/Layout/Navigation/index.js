@@ -71,8 +71,12 @@ const Navigation = ({ icon, title }) => {
     <Navbar expand='md' id='navbar' className='py-3'>
       <Container>
         <NavbarBrand tag={Link} to={ROUTES.LANDING}>
+          <i className={icon} />
+          <i className={icon} />
           <i className={`${icon} mr-1`} /> {title}{' '}
           <i className={`${icon} ml-1`} />
+          <i className={icon} />
+          <i className={icon} />
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

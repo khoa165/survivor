@@ -18,6 +18,7 @@ const Landing = (props) => {
           <Redirect to={ROUTES.HOME} />
         ) : (
           <div id='landing-survivor'>
+            <div className='curl d-none d-md-block'></div>
             <div className='overlay'>
               <LandingModal
                 openLoginForm={openLoginForm}
