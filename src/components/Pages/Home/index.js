@@ -18,8 +18,10 @@ const HomePage = () => (
       </Header>
     </Alert>
     <Container className='d-none d-md-block'>
-      <p className='lead'>Winners hall of fame</p>
-      {/* <WinnersSlideshow /> */}
+      <p className='heading-title'>
+        <span>Winners Hall of Fame</span>
+      </p>
+      <WinnersSlideshow />
     </Container>
   </div>
 );

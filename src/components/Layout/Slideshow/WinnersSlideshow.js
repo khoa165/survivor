@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Slideshow from './Slideshow';
 import { withFirebase } from '../../Firebase';
 import Spinner from '../Spinner';
+import WinnerSlideshowItem from './WinnerSlideshowItem';
 
 const WinnersSlideshow = ({ firebase }) => {
   const [loading, setLoading] = useState(false);
@@ -31,6 +32,11 @@ const WinnersSlideshow = ({ firebase }) => {
     // eslint-disable-next-line
   }, []);
 
-  return loading ? <Spinner /> : <Slideshow data={winners} />;
+  return loading ? (
+    <Spinner />
+  ) : (
+    <Slideshow data={winners} SlideshowItem={WinnerSlideshowItem} />
+  );
 };
+
 export default withFirebase(WinnersSlideshow);

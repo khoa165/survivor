@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Carousel, CarouselItem, CarouselControl } from 'reactstrap';
 import './Slideshow.scss';
 
-const Slideshow = ({ data }) => {
+const Slideshow = ({ data, SlideshowItem }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
 
@@ -18,38 +18,14 @@ const Slideshow = ({ data }) => {
     setActiveIndex(nextIndex);
   };
 
-  const slides = data.map((legend) => {
+  const slides = data.map((singleData, index) => {
     return (
       <CarouselItem
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
-        key={legend.id}
+        key={index}
       >
-        <div className='slideshow-item'>
-          <img
-            src={legend.avatar}
-            alt={legend.name}
-            className='slideshow-item-avatar'
-          />
-          <div className='slideshow-item-info'>
-            <p className='h2'>{legend.name}</p>
-            <p className='h5'>{legend.originalSeason}</p>
-          </div>
-
-          <div className='white-layover'></div>
-          <div className='orange-layover'>
-            <p className='h4 d-none d-md-block'>
-              Winner of {legend.winningSeason}{' '}
-              {legend.secondHighlightedSeason ? (
-                <span className='d-inline-block'>
-                  {'& '}
-                  {legend.hasTwoWins ? null : 'Runner-up of '}
-                  {legend.secondHighlightedSeason}
-                </span>
-              ) : null}
-            </p>
-          </div>
-        </div>
+        <SlideshowItem data={singleData} />
       </CarouselItem>
     );
   });
