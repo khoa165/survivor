@@ -1,57 +1,106 @@
 @import '../../../styles/Variables';
 @import '../../../styles/HelperMethods';
 
-.carousel-control-prev,
-.carousel-control-next {
-  display: none !important;
-}
-
-.slideshow-item {
-  @include resize($lg-min, null) {
-    // margin: 0 10%;
-  }
-  padding: 1px;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  background: #fff3cd;
-
-  .white-layover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 10%;
-    height: 100%;
-    background: #fff;
+#homePage {
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none !important;
   }
 
-  .orange-layover {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 90%;
-    height: 30%;
-    background: $brand-orange;
-    padding-left: 12%;
-    text-align: right;
-    padding-right: 5%;
-    padding-top: 10px;
-    color: #fff;
-  }
+  .slideshow-item {
+    padding: 1px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    background: #fff3cd;
 
-  .slideshow-item-avatar {
-    width: 20%;
-    padding: 10px;
-    border-radius: 50%;
-    border: 10px solid $brand-brown;
-    box-shadow: inset 0 0 10px $brand-orange;
-    z-index: 100;
-    background: #fff;
-  }
+    .white-layover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 10%;
+      height: 100%;
+      background: #fff;
 
-  .slideshow-item-info {
-    padding: 20px 0 20px 5%;
-    flex-grow: 1;
-    padding-top: 5%;
+      @include resize(null, $md-max) {
+        width: 15%;
+      }
+    }
+
+    .orange-layover {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 90%;
+      height: 30%;
+      background: $brand-orange;
+      padding-left: 7%;
+      padding-right: 5%;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      @include resize(null, $md-max) {
+        width: 85%;
+
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .slideshow-item-avatar {
+      width: 20%;
+      padding: 10px;
+      border-radius: 50%;
+      border: 10px solid $brand-brown;
+      box-shadow: inset 0 0 10px $brand-orange;
+      z-index: 100;
+      background: #fff;
+
+      @include resize(null, $md-max) {
+        width: 30%;
+      }
+    }
+
+    .slideshow-item-info {
+      padding: 20px 0 20px 3%;
+      flex-grow: 1;
+
+      @include resize(null, $md-max) {
+        padding-top: 10px;
+      }
+
+      .extra-info {
+        padding-left: 12px;
+        border-left: 7px solid #ccc;
+
+        @include resize(null, $md-max) {
+          padding-left: 3px;
+        }
+      }
+
+      h2 {
+        font-weight: bold;
+        border-bottom: 2px solid #000;
+        width: fit-content;
+        margin-bottom: 15px;
+
+        @include resize(null, $md-max) {
+          font-size: 18px;
+          margin-bottom: 5px;
+        }
+      }
+
+      p {
+        font-size: large;
+        margin-bottom: 0;
+
+        @include resize(null, $md-max) {
+          font-size: 14px;
+        }
+      }
+    }
   }
 }

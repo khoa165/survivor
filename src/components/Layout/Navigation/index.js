@@ -70,7 +70,7 @@ const Navigation = ({ icon, title }) => {
   return (
     <Navbar expand='md' id='navbar' className='py-3'>
       <Container>
-        <NavbarBrand tag={Link} to={ROUTES.LANDING}>
+        <NavbarBrand tag={Link} to={ROUTES.HOME}>
           <i className={icon} />
           <i className={icon} />
           <i className={`${icon} mr-1`} /> {title}{' '}

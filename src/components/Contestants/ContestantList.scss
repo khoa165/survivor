@@ -1,0 +1,73 @@
+@import '../../styles/Variables';
+@import '../../styles/HelperMethods';
+
+#contestantList {
+  th,
+  td {
+    &.column-7over12-lg-1over3 {
+      @include resize(null, $md-max) {
+        width: calc(100% / 12 * 7);
+      }
+
+      @include resize($lg-min, null) {
+        width: calc(100% / 36 * 7);
+      }
+    }
+
+    &.column-7over12 {
+      width: calc(100% / 12 * 7);
+    }
+
+    &.column-5over48 {
+      width: calc(100% / 48 * 5);
+    }
+
+    &.column-none-lg-7over18 {
+      width: calc(100% / 18 * 7);
+
+      @include resize(null, $md-max) {
+        display: none;
+      }
+    }
+
+    &.column-7over36 {
+      width: calc(100% / 36 * 7);
+    }
+  }
+
+  td {
+    padding-top: 15px;
+    padding-bottom: 20px;
+  }
+
+  .contestantName {
+    font-weight: bold;
+    font-style: italic;
+    margin: 0;
+  }
+
+  // .contestantSeason {
+  //   margin: 0;
+
+  //   @include resize(null, $md-max) {
+  //     margin: 0;
+  //   }
+  // }
+
+  .vote-icon {
+    // color: $brand-brown;
+    font-size: 20px;
+
+    &.fa-crown {
+      color: $brand-grey;
+    }
+
+    &.fa-heart {
+      color: $brand-red;
+    }
+
+    &.fa-star {
+      color: $brand-orange;
+    }
+  }
+}

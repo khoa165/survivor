@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { compose } from 'recompose';
-import { Container, Alert, Jumbotron } from 'reactstrap';
+import { Container, Alert, Jumbotron, Button } from 'reactstrap';
 import { Header } from 'semantic-ui-react';
 import { withAuthorization, withEmailVerification } from '../../Session';
 import { WinnersSlideshow } from '../../Layout/Slideshow';
+import * as ROUTES from '../../../constants/routes';
 import './Home.scss';
 
 const HomePage = () => (
@@ -17,11 +19,22 @@ const HomePage = () => (
         <span className='d-inline-block'>for Survivor Fans!</span>
       </Header>
     </Alert>
-    <Container className='d-none d-md-block'>
-      <p className='heading-title'>
-        <span>Winners Hall of Fame</span>
-      </p>
-      <WinnersSlideshow />
+    <Container>
+      <div>
+        <div className='heading-title-wrapper'>
+          <p className='heading-title'>Winners Hall of Fame</p>
+        </div>
+        <WinnersSlideshow />
+      </div>
+      <div className='heading-title-wrapper'>
+        <p className='heading-title'>
+          Legends Hall of Fame <span className=''>(coming soon)</span>
+        </p>
+
+        <Link to={ROUTES.VIEW_CONTESTANTS} className='btn btn-outline-warning'>
+          Nominate legends
+        </Link>
+      </div>
     </Container>
   </div>
 );

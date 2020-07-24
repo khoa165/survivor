@@ -16,6 +16,15 @@ const AccountPage = () => {
   const [activeItem, setActiveItem] = useState('Profile');
   const onClick = (itemName) => setActiveItem(itemName);
 
+  const renderCorrespondingComponent = (authUser) => {
+    switch (activeItem) {
+      case 'Authentication':
+        return <LoginManagement authUser={authUser} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <AuthUserContext.Consumer>
       {(authUser) => (
@@ -29,7 +38,8 @@ const AccountPage = () => {
               />
             </Col>
             <Col lg='9'>
-              <LoginManagement authUser={authUser} />
+              {/* <LoginManagement authUser={authUser} /> */}
+              {renderCorrespondingComponent(authUser)}
             </Col>
           </Row>
         </Container>

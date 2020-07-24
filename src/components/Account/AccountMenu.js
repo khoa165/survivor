@@ -19,9 +19,9 @@ const AccountMenu = ({ authUser, activeItem, onClick }) => {
       </Menu.Item>
       <Menu.Item
         name='inbox'
-        active={activeItem === 'Account'}
+        active={activeItem === 'Authentication'}
         onClick={() => {
-          onClick('Account');
+          onClick('Authentication');
         }}
       >
         Authentication

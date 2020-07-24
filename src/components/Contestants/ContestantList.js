@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
-import { Table } from 'reactstrap';
+import { Table, FormGroup, Input, Row, Col } from 'reactstrap';
 import { withLoading, withInfiniteScroll } from '../Layout/InfiniteScrollList';
+import './ContestantList.scss';
 
 const colorBasedOnAppearance = (numberSeasons) => {
   switch (numberSeasons) {
@@ -23,12 +24,12 @@ const colorBasedOnAppearance = (numberSeasons) => {
   }
 };
 
-const formatSeasonName = (originalSeason) => {
+const formatSeasonName = (originalSeason, addSpace = false) => {
   const { seasonNumber, seasonName } = originalSeason;
   if (seasonNumber >= 10) {
-    return `[${seasonNumber}] \xa0\xa0\xa0 ${seasonName}`;
+    return `[${seasonNumber}] ${addSpace ? '\xa0\xa0\xa0' : ''} ${seasonName}`;
   } else {
-    return `[0${seasonNumber}] \xa0\xa0\xa0 ${seasonName}`;
+    return `[0${seasonNumber}] ${addSpace ? '\xa0\xa0\xa0' : ''} ${seasonName}`;
   }
 };
 
@@ -51,7 +52,7 @@ class ContestantList extends React.Component {
   }
 
   loadContestants = async () => {
-    this.setState({ loading: true });
+    this.setState({ ...this.state, loading: true });
     await this.props.firebase
       .contestants()
       .orderByKey()
@@ -101,9 +102,19 @@ class ContestantList extends React.Component {
 const List = ({ list }) => (
   <Table striped hover className='mt-4' id='contestantList'>
     <thead className='thead-dark'>
-      <tr className='d-flex'>
-        <th className='col-5 pl-4'>Contestant</th>
-        <th className='col-7 text-center'>Original season</th>
+      <tr>
+        <th className='column-7over12-lg-1over3 pl-3 pl-md-4'>Contestants</th>
+        <th className='column-none-lg-7over18'></th>
+        <th className='column-5over48 text-center'>
+          <i className='fas fa-crown'></i>
+        </th>
+        <th className='column-5over48 text-center'>
+          <i className='fas fa-star'></i>
+        </th>
+        <th className='column-5over48 text-center'>
+          <i className='fas fa-heart'></i>
+        </th>
+        <th className='column-5over48 text-center'></th>
       </tr>
     </thead>
     <tbody>
@@ -111,16 +122,29 @@ const List = ({ list }) => (
         list.length > 0 &&
         list.map((contestant) => (
           <tr
-            className={`d-flex ${colorBasedOnAppearance(
-              contestant.numberSeasons
-            )}`}
+            className={`${colorBasedOnAppearance(contestant.numberSeasons)}`}
             key={contestant.uid}
           >
-            <td className='col-5 pl-4'>{contestant.name}</td>
-            <td className='col-7 pr-4 d-flex justify-content-between'>
-              <span className='mr-2'>
+            <td className='column-7over12-lg-1over3 pl-3 pl-md-4'>
+              <p className='contestantName'>{contestant.name}</p>
+              <p className='d-lg-none'>
                 {formatSeasonName(contestant.seasonsStat[0])}
-              </span>
+              </p>
+            </td>
+            <td className='column-none-lg-7over18'>
+              <p>{formatSeasonName(contestant.seasonsStat[0], true)}</p>
+            </td>
+            <td className='column-5over48 text-center'>
+              <i className='fas fa-crown vote-icon'></i>
+            </td>
+            <td className='column-5over48 text-center'>
+              <i className='far fa-star vote-icon'></i>
+            </td>
+            <td className='column-5over48 text-center'>
+              <i className='far fa-heart vote-icon'></i>
+            </td>
+
+            <td className='column-5over48 text-center'>
               <Link
                 className='text-dark'
                 to={{
