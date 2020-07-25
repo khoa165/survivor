@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Form, FormGroup, Input } from 'reactstrap';
+import { SignInAction, SignUpAction } from '../OtherActions';
 import * as ROUTES from '../../../constants/routes';
 import '../AuthForm.scss';
 
-const PasswordForgetForm = (props) => {
+const PasswordForgetForm = ({ firebase, pathname }) => {
   const [email, setEmail] = useState('');
-  const { firebase } = props;
 
   const notifySuccess = (success) => {
     toast(success, {
@@ -36,7 +35,7 @@ const PasswordForgetForm = (props) => {
           'Please check your email for a link to reset your password!'
         );
       })
-      .catch((error) => {
+      .catch((err) => {
         notifyErrors('Invalid email. Try again!');
       });
   };
@@ -64,32 +63,14 @@ const PasswordForgetForm = (props) => {
           className='btn btn-outline-warning btn-block submitFormButton'
         />
       </Form>
-      <div className='other-account-action'>
-        <p className='text-secondary'>Already have an account?</p>
-        <Link
-          to={{
-            pathname: ROUTES.LANDING,
-            state: { form: ROUTES.SIGN_IN },
-          }}
-          className='hover-brown text-brown ml-2'
-        >
-          Sign in
-        </Link>
-      </div>
-      <div className='other-account-action'>
-        <p className='text-secondary'>Are you a new Survivor fan?</p>
-        <Link
-          to={{
-            pathname: ROUTES.LANDING,
-            state: { form: ROUTES.SIGN_UP },
-          }}
-          className='hover-brown text-brown ml-2'
-        >
-          Sign up
-        </Link>
-      </div>
+      <SignInAction pathname={pathname} />
+      <SignUpAction pathname={pathname} />
     </div>
   );
+};
+
+PasswordForgetForm.defaultProps = {
+  pathname: ROUTES.LANDING,
 };
 
 export default PasswordForgetForm;

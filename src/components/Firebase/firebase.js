@@ -104,6 +104,13 @@ class Firebase {
     this.db.ref(`contestants/${name}/seasonsStat/${appearance - 1}`);
 
   winners = () => this.db.ref('winners');
+
+  // *** Voting API ***
+  voteForGOATs = (uid) => this.db.ref(`votes/${uid}/GOATs`);
+
+  voteForLegends = (uid) => this.db.ref(`votes/${uid}/legends`);
+
+  voteForFavorites = (uid) => this.db.ref(`votes/${uid}/favorites`);
 }
 
 export default Firebase;

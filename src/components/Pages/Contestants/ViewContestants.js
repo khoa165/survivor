@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
 import { Container, Jumbotron } from 'reactstrap';
-import { ContestantList } from '../../Contestants';
+import { Contestants } from '../../Contestants';
 
 const ViewContestants = () => (
   <Fragment>
     <Jumbotron fluid />
     <Container>
-      <ContestantList />
+      <Contestants />
     </Container>
   </Fragment>
 );

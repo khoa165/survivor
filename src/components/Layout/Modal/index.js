@@ -1,3 +1,3 @@
-import LandingModal from './LandingModal';
+import SemanticUIModal from './SemanticUIModal';
 
-export { LandingModal };
+export { SemanticUIModal };

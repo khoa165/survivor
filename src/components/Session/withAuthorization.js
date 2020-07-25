@@ -17,7 +17,7 @@ const withAuthorization = (condition, unmatchedConditionMessage = '') => (
             this.props.history.push({
               pathname: ROUTES.LANDING,
               state: {
-                openLoginForm: true,
+                openForm: true,
                 message: unmatchedConditionMessage,
               },
             });

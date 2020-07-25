@@ -1,4 +1,4 @@
-import ContestantList from './ContestantList';
+import Contestants from './Contestants';
 import ContestantItem from './ContestantItem';
 
-export { ContestantList, ContestantItem };
+export { Contestants, ContestantItem };

@@ -25,7 +25,7 @@ const notifyErrors = (error) => {
   });
 };
 
-const SignInForm = ({ firebase, history }) => {
+const SignInForm = ({ firebase, history, pathname }) => {
   // Set user data.
   const [user, setUser] = useState(INITIAL_STATE);
 
@@ -51,7 +51,7 @@ const SignInForm = ({ firebase, history }) => {
       .then(() => {
         setUser(INITIAL_STATE);
         notifySuccess('Account signed in successfully!');
-        history.push(ROUTES.HOME);
+        history.push(pathname);
       })
       .catch((_err) => {
         notifyErrors('Invalid credentials, please try again!');
@@ -94,6 +94,10 @@ const SignInForm = ({ firebase, history }) => {
       />
     </Form>
   );
+};
+
+SignInForm.defaultProps = {
+  pathname: ROUTES.HOME,
 };
 
 export default SignInForm;

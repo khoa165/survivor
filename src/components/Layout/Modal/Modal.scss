@@ -26,17 +26,39 @@
   }
 }
 
-.modal-dialog {
-  max-width: 430px !important;
+// .modal-dialog {
+//   max-width: 430px !important;
+// }
+
+// .modal-body-section {
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   justify-content: center;
+
+//   .authenticate-form {
+//     width: unquote('min(90vw, 400px)');
+//   }
+// }
+
+.ui.page.modals {
+  padding: 20px 5px;
+  justify-content: center;
+  align-items: center;
 }
 
-.modal-body-section {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
+.ui.modal {
+  max-width: 430px;
+  height: fit-content;
+  position: relative !important;
+
+  .content {
+    display: flex;
+    justify-content: center;
+  }
 
   .authenticate-form {
-    width: unquote('min(90vw, 400px)');
+    width: 100%;
+    height: fit-content;
   }
 }

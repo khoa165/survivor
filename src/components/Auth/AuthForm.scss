@@ -1,3 +1,6 @@
+@import '../../styles/Variables';
+@import '../../styles/HelperMethods';
+
 .authenticate-form {
   background: white;
   border: 1px solid white;
@@ -49,10 +52,21 @@ input:-webkit-autofill:active {
   font-size: 13px;
   position: absolute;
   top: -10px;
-  left: calc(50% - 154px);
   padding: 0 5px;
   background: #fff;
   z-index: 50;
+
+  @include resize(null, 399px) {
+    left: calc(50% - 125px);
+  }
+
+  @include resize(400px, $xs-max) {
+    left: calc(50% - 150px);
+  }
+
+  @include resize($sm-min, null) {
+    left: calc(50% - 172px);
+  }
 }
 
 .signInLineBreak {

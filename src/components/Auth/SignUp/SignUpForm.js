@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 import { notifySuccess, notifyErrors } from '../../../utils/Toast';
-import 'react-toastify/dist/ReactToastify.css';
+import { SignInAction } from '../OtherActions';
 
 import * as ROUTES from '../../../constants/routes';
 import * as ROLES from '../../../constants/roles';
@@ -26,7 +25,7 @@ const INITIAL_STATE = {
   confirmedPassword: '',
 };
 
-const SignUpForm = (props) => {
+const SignUpForm = ({ firebase, history, pathname }) => {
   // Set user data.
   const [user, setUser] = useState(INITIAL_STATE);
   let errors = [];
@@ -37,7 +36,6 @@ const SignUpForm = (props) => {
 
   // Destructuring.
   const { username, email, fullname, password, confirmedPassword } = user;
-  const { firebase, history } = props;
 
   const correctUserInput = () => {
     if (email === '' || username === '') {
@@ -196,20 +194,13 @@ const SignUpForm = (props) => {
           className='btn btn-warning btn-block submitFormButton'
         />
       </Form>
-      <div className='other-account-action'>
-        <p className='text-secondary'>Already have an account?</p>
-        <Link
-          to={{
-            pathname: ROUTES.LANDING,
-            state: { form: ROUTES.SIGN_IN },
-          }}
-          className='hover-brown text-brown ml-2'
-        >
-          Sign in
-        </Link>
-      </div>
+      <SignInAction pathname={pathname} />
     </div>
   );
+};
+
+SignUpForm.defaultProps = {
+  pathname: ROUTES.LANDING,
 };
 
 export default SignUpForm;
