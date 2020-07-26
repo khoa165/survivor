@@ -30,7 +30,7 @@ const formatSeasonName = (originalSeason, addSpace = false) => {
   }
 };
 
-const ContestantList = ({ list, onIconClick }) => (
+const ContestantList = ({ list, onIconClick, GOATs, legends, favorites }) => (
   <Table striped hover className='mt-4' id='contestantList'>
     <thead className='thead-dark'>
       <tr>
@@ -67,19 +67,25 @@ const ContestantList = ({ list, onIconClick }) => (
             </td>
             <td className='column-5over48 text-center'>
               <i
-                className='fas fa-crown vote-icon'
+                className={`${
+                  GOATs.includes(contestant.id) ? 'highlighted' : null
+                } fas fa-crown vote-icon`}
                 onClick={() => onIconClick(1, contestant.id)}
               ></i>
             </td>
             <td className='column-5over48 text-center'>
               <i
-                className='far fa-star vote-icon'
+                className={`${
+                  legends.includes(contestant.id) ? 'fas' : 'far'
+                } fa-star vote-icon`}
                 onClick={() => onIconClick(2, contestant.id)}
               ></i>
             </td>
             <td className='column-5over48 text-center'>
               <i
-                className='far fa-heart vote-icon'
+                className={`${
+                  favorites.includes(contestant.id) ? 'fas' : 'far'
+                } fa-heart vote-icon`}
                 onClick={() => onIconClick(3, contestant.id)}
               ></i>
             </td>

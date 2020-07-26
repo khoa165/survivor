@@ -14,6 +14,9 @@ class Contestants extends React.Component {
       loadSize: 20,
       loading: false,
       contestants: [],
+      GOATs: [],
+      legends: [],
+      favorites: [],
       lastFetched: 'Aaron_Meredith',
       firstTime: true,
       listEnded: false,
@@ -21,12 +24,45 @@ class Contestants extends React.Component {
   }
 
   componentDidMount() {
-    this.loadContestants();
+    this.setState({ ...this.state, loading: true });
+    setTimeout(
+      function () {
+        this.getGOATsLegendsFavorites();
+        this.loadContestants();
+      }.bind(this),
+      1500
+    );
   }
 
-  loadContestants = async () => {
+  getGOATsLegendsFavorites = async () => {
+    const { firebase } = this.props;
+    const { userGOATs, userLegends, userFavorites } = firebase;
+
+    const currentUser = firebase.auth.currentUser;
+    if (currentUser) {
+      this.getList(userGOATs, currentUser, 'GOATs');
+      this.getList(userLegends, currentUser, 'legends');
+      this.getList(userFavorites, currentUser, 'favorites');
+    }
+  };
+
+  getList = async (getFunction, currentUser, listName) => {
     this.setState({ ...this.state, loading: true });
-    await this.props.firebase
+    await getFunction(currentUser.uid).once('value', (snapshot) => {
+      const data = snapshot.val();
+      const list = data ? Object.keys(data) : [];
+      this.setState({
+        ...this.state,
+        loading: false,
+        [listName]: list,
+      });
+    });
+  };
+
+  loadContestants = async () => {
+    const { firebase } = this.props;
+    this.setState({ ...this.state, loading: true });
+    await firebase
       .contestants()
       .orderByKey()
       .startAt(this.state.lastFetched)
@@ -58,27 +94,46 @@ class Contestants extends React.Component {
       });
   };
 
-  onIconClick = (iconNumber, contestant_name) => {
-    const {
-      voteForGOATs,
-      voteForLegends,
-      voteForFavorites,
-    } = this.props.firebase;
-    const currentUser = this.props.firebase.auth.currentUser;
+  onIconClick = async (iconNumber, contestant_name) => {
+    const { firebase } = this.props;
+    const { voteForGOATs, voteForLegends, voteForFavorites } = firebase;
+    const currentUser = firebase.auth.currentUser;
     if (!currentUser) {
       notifyErrors('You have to login to vote!', 5);
     } else {
-      notifyErrors(contestant_name, 1);
-
       if (iconNumber === 1) {
+        this.voteContestant(voteForGOATs, currentUser, contestant_name);
       } else if (iconNumber === 2) {
+        this.voteContestant(voteForLegends, currentUser, contestant_name);
       } else if (iconNumber === 3) {
+        this.voteContestant(voteForFavorites, currentUser, contestant_name);
       }
     }
   };
 
+  voteContestant = async (voteFunction, currentUser, contestant_name) => {
+    await voteFunction(currentUser.uid, contestant_name).once(
+      'value',
+      (snapshot) => {
+        if (snapshot.exists()) {
+          voteFunction(currentUser.uid, contestant_name).set(null);
+        } else {
+          voteFunction(currentUser.uid, contestant_name).set(true);
+        }
+        this.getGOATsLegendsFavorites();
+      }
+    );
+  };
+
   render() {
-    const { contestants, loading, listEnded } = this.state;
+    const {
+      contestants,
+      loading,
+      listEnded,
+      GOATs,
+      legends,
+      favorites,
+    } = this.state;
     return (
       <InfiniteScrollList
         className='p-0'
@@ -87,6 +142,9 @@ class Contestants extends React.Component {
         listEnded={listEnded}
         onScroll={this.loadContestants}
         onIconClick={this.onIconClick}
+        GOATs={GOATs}
+        legends={legends}
+        favorites={favorites}
       />
     );
   }
