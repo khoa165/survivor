@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { Table } from 'reactstrap';
+import Spinner from '../Layout/Spinner';
 import './ContestantList.scss';
 
 const colorBasedOnAppearance = (numberSeasons) => {
@@ -30,7 +31,14 @@ const formatSeasonName = (originalSeason, addSpace = false) => {
   }
 };
 
-const ContestantList = ({ list, onIconClick, GOATs, legends, favorites }) => (
+const ContestantList = ({
+  list,
+  onIconClick,
+  GOATs,
+  legends,
+  favorites,
+  isSearching,
+}) => (
   <Table striped hover className='mt-4' id='contestantList'>
     <thead className='thead-dark'>
       <tr>
@@ -48,62 +56,68 @@ const ContestantList = ({ list, onIconClick, GOATs, legends, favorites }) => (
         <th className='column-5over48 text-center'></th>
       </tr>
     </thead>
-    <tbody>
-      {list &&
-        list.length > 0 &&
-        list.map((contestant) => (
-          <tr
-            className={`${colorBasedOnAppearance(contestant.numberSeasons)}`}
-            key={contestant.id}
-          >
-            <td className='column-7over12-lg-1over3 pl-3 pl-md-4'>
-              <p className='contestantName'>{contestant.name}</p>
-              <p className='d-lg-none'>
-                {formatSeasonName(contestant.seasonsStat[0])}
-              </p>
-            </td>
-            <td className='column-none-lg-7over18'>
-              <p>{formatSeasonName(contestant.seasonsStat[0], true)}</p>
-            </td>
-            <td className='column-5over48 text-center'>
-              <i
-                className={`${
-                  GOATs.includes(contestant.id) ? 'highlighted' : null
-                } fas fa-crown vote-icon`}
-                onClick={() => onIconClick(1, contestant.id)}
-              ></i>
-            </td>
-            <td className='column-5over48 text-center'>
-              <i
-                className={`${
-                  legends.includes(contestant.id) ? 'fas' : 'far'
-                } fa-star vote-icon`}
-                onClick={() => onIconClick(2, contestant.id)}
-              ></i>
-            </td>
-            <td className='column-5over48 text-center'>
-              <i
-                className={`${
-                  favorites.includes(contestant.id) ? 'fas' : 'far'
-                } fa-heart vote-icon`}
-                onClick={() => onIconClick(3, contestant.id)}
-              ></i>
-            </td>
+    {isSearching ? (
+      <Spinner />
+    ) : (
+      <tbody>
+        {list &&
+          list.length > 0 &&
+          list.map((contestant) => (
+            <tr
+              className={`${colorBasedOnAppearance(
+                contestant.basicInfo.numberSeasons
+              )}`}
+              key={contestant.id}
+            >
+              <td className='column-7over12-lg-1over3 pl-3 pl-md-4'>
+                <p className='contestantName'>{contestant.basicInfo.name}</p>
+                <p className='d-lg-none'>
+                  {formatSeasonName(contestant.seasonsInfo[0])}
+                </p>
+              </td>
+              <td className='column-none-lg-7over18'>
+                <p>{formatSeasonName(contestant.seasonsInfo[0], true)}</p>
+              </td>
+              <td className='column-5over48 text-center'>
+                <i
+                  className={`${
+                    GOATs.includes(contestant.id) ? 'highlighted' : null
+                  } fas fa-crown vote-icon`}
+                  onClick={() => onIconClick(1, contestant.id)}
+                ></i>
+              </td>
+              <td className='column-5over48 text-center'>
+                <i
+                  className={`${
+                    legends.includes(contestant.id) ? 'fas' : 'far'
+                  } fa-star vote-icon`}
+                  onClick={() => onIconClick(2, contestant.id)}
+                ></i>
+              </td>
+              <td className='column-5over48 text-center'>
+                <i
+                  className={`${
+                    favorites.includes(contestant.id) ? 'fas' : 'far'
+                  } fa-heart vote-icon`}
+                  onClick={() => onIconClick(3, contestant.id)}
+                ></i>
+              </td>
 
-            <td className='column-5over48 text-center'>
-              <Link
-                className='text-dark'
-                to={{
-                  pathname: `${ROUTES.VIEW_CONTESTANTS}/${contestant.uid}`,
-                  state: { contestant },
-                }}
-              >
-                <i className='fas fa-external-link-alt'></i>
-              </Link>
-            </td>
-          </tr>
-        ))}
-    </tbody>
+              <td className='column-5over48 text-center'>
+                <Link
+                  className='text-dark'
+                  to={{
+                    pathname: `${ROUTES.VIEW_CONTESTANTS}/${contestant.id}`,
+                    state: { contestant },
+                  }}
+                >
+                  <i className='fas fa-external-link-alt'></i>
+                </Link>
+              </td>
+            </tr>
+          ))}
+      </tbody>
+    )}
   </Table>
 );
 

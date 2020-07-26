@@ -71,3 +71,22 @@
     }
   }
 }
+
+.searchBar {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 40px;
+
+  input {
+    position: absolute;
+    padding-right: 30px;
+  }
+
+  .eraseIcon {
+    margin-right: 15px;
+    font-size: 20px;
+    color: $brand-red;
+  }
+}

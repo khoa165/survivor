@@ -48,6 +48,7 @@ class SignInTwitterBase extends React.Component {
     firebase
       .doSignInWithTwitter()
       .then((socialAuthUser) => {
+        console.log(socialAuthUser);
         if (socialAuthUser.additionalUserInfo.isNewUser) {
           const roles = {};
           roles[ROLES.USER] = true;
@@ -56,8 +57,9 @@ class SignInTwitterBase extends React.Component {
 
           // Create a user in Firebase Realtime Database.
           return firebase.user(socialAuthUser.user.uid).set({
-            fullname: socialAuthUser.additionalUserInfo.profile.name,
-            email: socialAuthUser.additionalUserInfo.profile.email,
+            fullname: socialAuthUser.user.displayName,
+            email: socialAuthUser.user.email,
+            picture: socialAuthUser.user.photoURL,
             roles: roles,
           });
         }

@@ -57,8 +57,9 @@ class SignInFacebookBase extends React.Component {
 
           // Create a user in Firebase Realtime Database.
           return firebase.user(socialAuthUser.user.uid).set({
-            fullname: socialAuthUser.additionalUserInfo.profile.name,
-            email: socialAuthUser.additionalUserInfo.profile.email,
+            fullname: socialAuthUser.user.displayName,
+            email: socialAuthUser.user.email,
+            picture: socialAuthUser.user.photoURL,
             roles: roles,
           });
         }

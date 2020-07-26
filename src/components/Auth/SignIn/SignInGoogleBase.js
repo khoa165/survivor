@@ -59,6 +59,7 @@ class SignInGoogleBase extends React.Component {
           return firebase.user(socialAuthUser.user.uid).set({
             fullname: socialAuthUser.user.displayName,
             email: socialAuthUser.user.email,
+            picture: socialAuthUser.user.photoURL,
             roles: roles,
           });
         }

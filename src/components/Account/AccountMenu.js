@@ -3,7 +3,7 @@ import { Label, Menu } from 'semantic-ui-react';
 
 const AccountMenu = ({ authUser, activeItem, onClick }) => {
   return (
-    <Menu vertical className='width-100'>
+    <Menu vertical className='width-100 mb-4'>
       <Menu.Item name='inbox'>
         <Label color='teal'>khoa165</Label>
         Khoa Thien Le

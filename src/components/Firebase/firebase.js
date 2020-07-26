@@ -100,8 +100,14 @@ class Firebase {
 
   contestant = (name) => this.db.ref(`contestants/${name}`);
 
-  contestantSeasonStat = (name, appearance) =>
-    this.db.ref(`contestants/${name}/seasonsStat/${appearance - 1}`);
+  contestantGOATVoteCount = (name) =>
+    this.db.ref(`contestants/${name}/votes/GOAT`);
+
+  contestantLegenVoteCount = (name) =>
+    this.db.ref(`contestants/${name}/votes/legend`);
+
+  contestantFavoriteVoteCount = (name) =>
+    this.db.ref(`contestants/${name}/votes/favorite`);
 
   winners = () => this.db.ref('winners');
 

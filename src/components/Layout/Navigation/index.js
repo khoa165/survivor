@@ -111,7 +111,7 @@ const Navigation = ({ icon, title, location }) => {
   };
 
   return (
-    <Navbar expand='md' id='navbar' className='py-3'>
+    <Navbar dark expand='md' id='navbar' className='py-3'>
       <Container>
         <NavbarBrand tag={Link} to={ROUTES.HOME}>
           <i className={icon} />
@@ -139,7 +139,7 @@ const Navigation = ({ icon, title, location }) => {
 };
 
 Navigation.defaultProps = {
-  title: 'Survivor 39days',
+  title: 'Survivor',
   icon: 'fas fa-fire',
 };
 

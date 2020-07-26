@@ -13,9 +13,7 @@ const WinnerSlideshowItem = ({ data }) => {
         <div className='extra-info'>
           <p>
             {` ${data.totalDaysLasted} days, `}
-            {`${
-              data.totalTribalWins + data.totalIndividualWins
-            } challenge wins`}
+            {`${data.totalWins} challenge wins`}
           </p>
         </div>
       </div>
