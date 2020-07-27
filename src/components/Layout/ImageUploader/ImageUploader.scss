@@ -1,0 +1,107 @@
+@import '../../../styles/Variables.scss';
+
+.image-uploader {
+  border: 3px solid black;
+  padding: 15px 0;
+
+  .image-area {
+    height: 300px;
+  }
+
+  .avatar-wrapper {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+  }
+
+  .x-icon-wrapper {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    top: 7%;
+    right: 7%;
+    border-radius: 50%;
+    background: $brand-light-red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+
+    &:hover {
+      background: $brand-red;
+    }
+  }
+
+  .uploader-x-icon {
+    color: white;
+    font-size: 28px;
+  }
+
+  .user-avatar {
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    padding: 20px;
+    border: 1px dashed black;
+  }
+
+  .avatar-placeholder-wrapper {
+    padding: 20px;
+  }
+
+  .avatar-placeholder {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $brand-grey;
+    position: relative;
+    margin: auto;
+  }
+
+  .uploader-user-icon {
+    font-size: 160px;
+    margin-bottom: 10px;
+    color: white;
+  }
+
+  .plus-icon-wrapper {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    bottom: 15%;
+    right: 15%;
+    border-radius: 50%;
+    background: #555;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .uploader-plus-icon {
+    color: white;
+    font-size: 28px;
+  }
+
+  .form-group {
+    text-align: center;
+  }
+
+  #avatarUploadBtn {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    margin: auto;
+  }
+
+  .avatarUploadLabel,
+  .updateAvatarBtn {
+    width: 250px;
+  }
+}

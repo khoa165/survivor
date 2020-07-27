@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import LoginManagementBase from './LoginManagement/LoginManagementBase';
+import LoginManagement from './LoginManagement';
 import {
   withEmailVerification,
   withAuthorization,
   AuthUserContext,
 } from '../Session';
-import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 import { Container, Row, Col } from 'reactstrap';
 import AccountMenu from './AccountMenu';
-
-const LoginManagement = withFirebase(LoginManagementBase);
+import Profile from './Profile/Profile';
 
 const AccountPage = () => {
   const [activeItem, setActiveItem] = useState('Profile');
@@ -18,6 +16,8 @@ const AccountPage = () => {
 
   const renderCorrespondingComponent = (authUser) => {
     switch (activeItem) {
+      case 'Profile':
+        return <Profile authUser={authUser} />;
       case 'Authentication':
         return <LoginManagement authUser={authUser} />;
       default:
