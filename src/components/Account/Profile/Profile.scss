@@ -1,4 +1,20 @@
 @import '../../../styles/Variables.scss';
 
-#profileSection {
+#userProfile {
+  .heading-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 24px;
+    color: $brand-brown;
+    margin: 50px 0 25px 0;
+    border-bottom: 5px solid $brand-brown;
+  }
+
+  .submitProfileButton {
+    padding: 10px 0;
+    height: 50px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
 }

@@ -87,15 +87,10 @@ const SignInForm = ({ firebase, history, pathname }) => {
           required
         />
       </FormGroup>
-      {/* <Input
-        type='submit'
-        value='Enter your Survivor world'
-        className='btn btn-warning btn-block submitFormButton'
-      /> */}
       <Input
         type='submit'
         value='Enter your Survivor world'
-        className='btn btn-danger animation-on-hover'
+        className='btn btn-warning btn-block submitFormButton'
       />
     </Form>
   );

@@ -54,7 +54,7 @@ const SignUpForm = ({ firebase, history, pathname }) => {
     if (
       password === '' ||
       password.length < 6 ||
-      password.length < 6 ||
+      password.length > 20 ||
       !/\d/.test(password)
     ) {
       errors.push('Password are required!');
@@ -92,14 +92,20 @@ const SignUpForm = ({ firebase, history, pathname }) => {
           .then((existed) => {
             if (!existed) {
               // If username not taken yet, add username to list.
-              firebase.usernames().child(username).set(true);
+              firebase.usernames().child(username).set(authUser.uid);
 
               const data = { username, email, roles };
               if (fullname) data.fullname = fullname;
 
               // Create a user in your Firebase realtime database
-              firebase.user(authUser.user.uid).set(data);
+              firebase.userPublicInfo(authUser.user.uid).set(data);
+            } else {
+              notifyErrors('Username already taken!');
+              throw new Error('Username already taken!');
             }
+          })
+          .catch((err) => {
+            notifyErrors(err);
           });
       })
       .then(() => {

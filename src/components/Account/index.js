@@ -28,7 +28,7 @@ const AccountPage = () => {
   return (
     <AuthUserContext.Consumer>
       {(authUser) => (
-        <Container className='mt-4'>
+        <Container id='accountPage' className='mt-4'>
           <Row className='justify-content-between'>
             <Col lg='3'>
               <AccountMenu

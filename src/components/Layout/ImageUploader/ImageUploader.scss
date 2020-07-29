@@ -1,8 +1,8 @@
 @import '../../../styles/Variables.scss';
 
 .image-uploader {
-  border: 3px solid black;
-  padding: 15px 0;
+  border: 3px solid $brand-brown;
+  padding: 20px 0;
 
   .image-area {
     height: 300px;
@@ -43,7 +43,7 @@
     height: 270px;
     border-radius: 50%;
     padding: 20px;
-    border: 1px dashed black;
+    border: 1px dashed $brand-brown;
   }
 
   .avatar-placeholder-wrapper {
@@ -57,7 +57,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: $brand-grey;
+    background: $brand-brown;
     position: relative;
     margin: auto;
   }
@@ -75,7 +75,7 @@
     bottom: 15%;
     right: 15%;
     border-radius: 50%;
-    background: #555;
+    background: $brand-grey;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,6 +88,7 @@
 
   .form-group {
     text-align: center;
+    margin: 0;
   }
 
   #avatarUploadBtn {
@@ -103,5 +104,7 @@
   .avatarUploadLabel,
   .updateAvatarBtn {
     width: 250px;
+    text-transform: uppercase;
+    padding: 10px;
   }
 }

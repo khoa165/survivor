@@ -56,7 +56,7 @@ class SignInGoogleBase extends React.Component {
           roles[ROLES.DEVELOPER] = false;
 
           // Create a user in Firebase Realtime Database.
-          return firebase.user(socialAuthUser.user.uid).set({
+          return firebase.userPublicInfo(socialAuthUser.user.uid).set({
             fullname: socialAuthUser.user.displayName,
             email: socialAuthUser.user.email,
             picture: socialAuthUser.user.photoURL,

@@ -57,7 +57,7 @@ class Firebase {
   onAuthUserListener = (next, fallback) =>
     this.auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        this.user(authUser.uid)
+        this.userPublicInfo(authUser.uid)
           .once('value')
           .then((snapshot) => {
             const dbUser = snapshot.val();
@@ -91,7 +91,9 @@ class Firebase {
 
   users = () => this.db.ref('users');
 
-  user = (uid) => this.db.ref(`users/${uid}`);
+  userPublicInfo = (uid) => this.db.ref(`users/${uid}/public`);
+
+  userPrivateInfo = (uid) => this.db.ref(`users/${uid}/private`);
 
   usernames = () => this.db.ref('usernames');
 

@@ -36,14 +36,16 @@ const SIGN_IN_METHODS = [
 ];
 
 const LoginManagementBase = ({ firebase, authUser }) => {
+  const [loading, setLoading] = useState(true);
   const [activeSignInMethods, setActiveSignInMethods] = useState([]);
 
   const fetchSignInMethods = () => {
     firebase.auth
       .fetchSignInMethodsForEmail(authUser.email)
-      .then((activeSignInMethods) =>
-        setActiveSignInMethods(activeSignInMethods)
-      )
+      .then((activeSignInMethods) => {
+        setActiveSignInMethods(activeSignInMethods);
+        setLoading(false);
+      })
       .catch((err) => notifyErrors(err.message));
   };
 
@@ -80,34 +82,37 @@ const LoginManagementBase = ({ firebase, authUser }) => {
   }, []);
 
   return (
-    <Fragment>
-      {activeSignInMethods.includes(DEFAULT_SIGN_IN.id) ? (
-        <UpdatePassword />
-      ) : (
-        <AddPassword onConnect={onDefaultLoginLink} />
-      )}
+    !loading &&
+    loading !== null && (
+      <Fragment>
+        {activeSignInMethods.includes(DEFAULT_SIGN_IN.id) ? (
+          <UpdatePassword />
+        ) : (
+          <AddPassword onConnect={onDefaultLoginLink} />
+        )}
 
-      <hr className='my-5' />
-      <p className='lead'>Enable/Disable login with</p>
-      <Row>
-        {SIGN_IN_METHODS.map((signInMethod) => {
-          const isTheOnlyActive = activeSignInMethods.length === 1;
-          const isEnabled = activeSignInMethods.includes(signInMethod.id);
+        <hr className='my-5' />
+        <p className='lead'>Enable/Disable login with</p>
+        <Row>
+          {SIGN_IN_METHODS.map((signInMethod) => {
+            const isTheOnlyActive = activeSignInMethods.length === 1;
+            const isEnabled = activeSignInMethods.includes(signInMethod.id);
 
-          return (
-            <Fragment key={signInMethod.id}>
-              <LoginToggle
-                isTheOnlyActive={isTheOnlyActive}
-                isEnabled={isEnabled}
-                signInMethod={signInMethod}
-                onConnect={onConnect}
-                onDisconnect={onDisconnect}
-              />
-            </Fragment>
-          );
-        })}
-      </Row>
-    </Fragment>
+            return (
+              <Fragment key={signInMethod.id}>
+                <LoginToggle
+                  isTheOnlyActive={isTheOnlyActive}
+                  isEnabled={isEnabled}
+                  signInMethod={signInMethod}
+                  onConnect={onConnect}
+                  onDisconnect={onDisconnect}
+                />
+              </Fragment>
+            );
+          })}
+        </Row>
+      </Fragment>
+    )
   );
 };
 

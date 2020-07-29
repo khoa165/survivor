@@ -1,5 +1,6 @@
 import React from 'react';
 import { Label, Menu } from 'semantic-ui-react';
+import './AccountMenu.scss';
 
 const AccountMenu = ({ authUser, activeItem, onClick }) => {
   return (
