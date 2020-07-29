@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/storage';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -20,11 +21,20 @@ class Firebase {
     this.emailAuthProvider = app.auth.EmailAuthProvider;
     this.auth = app.auth();
     this.db = app.database();
+    this.storage = app.storage();
 
     this.googleProvider = new app.auth.GoogleAuthProvider();
     this.facebookProvider = new app.auth.FacebookAuthProvider();
     this.twitterProvider = new app.auth.TwitterAuthProvider();
   }
+
+  // *** Image API ***
+
+  storageRef = () => this.storage.ref();
+
+  usersStorageRef = () => this.storageRef().child('users');
+
+  userAvatarRef = (uid) => this.usersStorageRef().child(uid).child('avatar');
 
   // *** Auth API ***
 
@@ -91,43 +101,49 @@ class Firebase {
 
   users = () => this.db.ref('users');
 
-  userPublicInfo = (uid) => this.db.ref(`users/${uid}/public`);
+  user = (uid) => this.users().child(uid);
 
-  userPrivateInfo = (uid) => this.db.ref(`users/${uid}/private`);
+  userPublicInfo = (uid) => this.user(uid).child('public');
+
+  userPrivateInfo = (uid) => this.user(uid).child('private');
 
   usernames = () => this.db.ref('usernames');
 
   // *** Survivor API ***
+
   contestants = () => this.db.ref('contestants');
 
-  contestant = (name) => this.db.ref(`contestants/${name}`);
+  contestant = (name) => this.contestants().child(name);
 
-  contestantGOATVoteCount = (name) =>
-    this.db.ref(`contestants/${name}/votes/GOAT`);
+  contestantVotes = (name) => this.contestant(name).child('votes');
+
+  contestantGOATVoteCount = (name) => this.contestantVotes(name).child('GOAT');
 
   contestantLegenVoteCount = (name) =>
-    this.db.ref(`contestants/${name}/votes/legend`);
+    this.contestantVotes(name).child('legend');
 
   contestantFavoriteVoteCount = (name) =>
-    this.db.ref(`contestants/${name}/votes/favorite`);
+    this.contestantVotes(name).child('favorite');
 
   winners = () => this.db.ref('winners');
 
   // *** Voting API ***
-  userGOATs = (uid) => this.db.ref(`voting/${uid}/GOATs`);
+  voting = () => this.db.ref('voting');
 
-  userLegends = (uid) => this.db.ref(`voting/${uid}/legends`);
+  userVoting = (uid) => this.voting().child(uid);
 
-  userFavorites = (uid) => this.db.ref(`voting/${uid}/favorites`);
+  userGOATs = (uid) => this.userVoting(uid).child('GOATs');
 
-  voteForGOATs = (uid, contestant) =>
-    this.db.ref(`voting/${uid}/GOATs/${contestant}`);
+  userLegends = (uid) => this.userVoting(uid).child('legends');
 
-  voteForLegends = (uid, contestant) =>
-    this.db.ref(`voting/${uid}/legends/${contestant}`);
+  userFavorites = (uid) => this.userVoting(uid).child('favorites');
+
+  voteForGOATs = (uid, contestant) => this.userGOATs(uid).child(contestant);
+
+  voteForLegends = (uid, contestant) => this.userLegends(uid).child(contestant);
 
   voteForFavorites = (uid, contestant) =>
-    this.db.ref(`voting/${uid}/favorites/${contestant}`);
+    this.userFavorites(uid).child(contestant);
 }
 
 export default Firebase;

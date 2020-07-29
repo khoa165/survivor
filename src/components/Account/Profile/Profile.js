@@ -33,9 +33,9 @@ const Profile = ({ firebase, authUser }) => {
       setLoading(false);
     });
 
-    // return () => {
-    //   firebase.userPublicInfo(authUser.uid).off();
-    // };
+    return () => {
+      firebase.userPublicInfo(authUser.uid).off();
+    };
 
     // eslint-disable-next-line
   }, []);
