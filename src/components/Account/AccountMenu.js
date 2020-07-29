@@ -5,12 +5,15 @@ import './AccountMenu.scss';
 const AccountMenu = ({ authUser, activeItem, onClick }) => {
   return (
     <Menu vertical className='width-100 mb-4'>
-      <Menu.Item name='inbox'>
-        <Label color='teal'>khoa165</Label>
-        Khoa Thien Le
+      <Menu.Item>
+        {authUser.username ? (
+          <Label color='teal'>{authUser.username}</Label>
+        ) : null}
+        <span className='user-fullname'>
+          {authUser.fullname ? authUser.fullname : authUser.email}
+        </span>
       </Menu.Item>
       <Menu.Item
-        name='inbox'
         active={activeItem === 'Profile'}
         onClick={() => {
           onClick('Profile');
@@ -19,7 +22,6 @@ const AccountMenu = ({ authUser, activeItem, onClick }) => {
         Profile
       </Menu.Item>
       <Menu.Item
-        name='inbox'
         active={activeItem === 'Authentication'}
         onClick={() => {
           onClick('Authentication');
@@ -28,7 +30,6 @@ const AccountMenu = ({ authUser, activeItem, onClick }) => {
         Authentication
       </Menu.Item>
       <Menu.Item
-        name='inbox'
         active={activeItem === 'Settings'}
         onClick={() => {
           onClick('Settings');

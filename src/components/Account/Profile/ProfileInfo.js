@@ -12,6 +12,8 @@ const ProfileForm = ({ firebase, currentInfo }) => {
   });
   const [success, setSuccess] = useState(false);
   let errors = [];
+  const currentUsername =
+    currentInfo && currentInfo.username ? currentInfo.username : '';
 
   // Destructuring.
   const { username, fullname, bio } = info;
@@ -53,6 +55,11 @@ const ProfileForm = ({ firebase, currentInfo }) => {
           if (!existedUID) {
             // If username not taken yet, add username to list.
             firebase.usernames().child(username).set(currentUser.uid);
+
+            // Free previous username.
+            if (currentUsername) {
+              firebase.usernames().child(currentUsername).set(null);
+            }
 
             // Set user's username in your Firebase realtime database
             firebase

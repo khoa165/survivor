@@ -81,45 +81,42 @@ const SignUpForm = ({ firebase, history, pathname }) => {
     }
 
     firebase
-      .doCreateUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        firebase
-          .usernames()
-          .once('value')
-          .then((snapshot) => {
-            return snapshot.exists() && snapshot.child(username).exists();
-          })
-          .then((existed) => {
-            if (!existed) {
-              // If username not taken yet, add username to list.
-              firebase.usernames().child(username).set(authUser.uid);
+      .usernames()
+      .once('value')
+      .then((snapshot) => {
+        if (snapshot.exists() && snapshot.child(username).exists()) {
+          notifyErrors('Username already taken!');
+        } else {
+          firebase
+            .doCreateUserWithEmailAndPassword(email, password)
+            .then((authUser) => {
+              console.log(authUser);
+              // Username not taken yet, add username to list.
+              firebase.usernames().child(username).set(authUser.user.uid);
 
               const data = { username, email, roles };
               if (fullname) data.fullname = fullname;
 
               // Create a user in your Firebase realtime database
-              firebase.userPublicInfo(authUser.user.uid).set(data);
-            } else {
-              notifyErrors('Username already taken!');
-              throw new Error('Username already taken!');
-            }
-          })
-          .catch((err) => {
-            notifyErrors(err);
-          });
-      })
-      .then(() => {
-        return firebase.doSendEmailVerification();
-      })
-      .then((_authUser) => {
-        setUser(INITIAL_STATE);
-        notifySuccess('Account created successfully!');
-        history.push(ROUTES.HOME);
+              return firebase.userPublicInfo(authUser.user.uid).set(data);
+            })
+            .then(() => {
+              return firebase.doSendEmailVerification();
+            })
+            .then((_authUser) => {
+              setUser(INITIAL_STATE);
+              notifySuccess('Account created successfully!');
+              history.push(ROUTES.HOME);
+            })
+            .catch((err) => {
+              if (err.code === ERROR_CODE_ACCOUNT_EXISTS) {
+                notifyErrors(ERROR_MSG_ACCOUNT_EXISTS);
+              }
+            });
+        }
       })
       .catch((err) => {
-        if (err.code === ERROR_CODE_ACCOUNT_EXISTS) {
-          notifyErrors(ERROR_MSG_ACCOUNT_EXISTS);
-        }
+        notifyErrors(err);
       });
   };
 
@@ -165,7 +162,6 @@ const SignUpForm = ({ firebase, history, pathname }) => {
             value={fullname}
             onChange={onChange}
             placeholder='(Optional) Let others know how to address you'
-            required
           />
         </FormGroup>
         <FormGroup>

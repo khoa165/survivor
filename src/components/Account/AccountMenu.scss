@@ -4,4 +4,10 @@
   .ui.menu {
     border-left: 5px solid $brand-brown;
   }
+
+  .user-fullname {
+    text-transform: uppercase;
+    font-weight: bolder;
+    color: $brand-brown;
+  }
 }
