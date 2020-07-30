@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { compose } from 'recompose';
-import { Container, Alert, Jumbotron, Button } from 'reactstrap';
+import { Container, Alert, Jumbotron } from 'reactstrap';
 import { Header } from 'semantic-ui-react';
 import { withAuthorization, withEmailVerification } from '../../Session';
 import { WinnersSlideshow } from '../../Layout/Slideshow';
@@ -28,7 +28,8 @@ const HomePage = () => (
       </div>
       <div className='heading-title-wrapper'>
         <p className='heading-title'>
-          Legends Hall of Fame <span className=''>(coming soon)</span>
+          Legends Hall of Fame{' '}
+          <span className='d-none d-md-inline-block'>(coming soon)</span>
         </p>
 
         <Link to={ROUTES.VIEW_CONTESTANTS} className='btn btn-outline-warning'>

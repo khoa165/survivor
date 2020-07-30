@@ -2,6 +2,7 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
+import 'firebase/analytics';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -22,13 +23,27 @@ class Firebase {
     this.auth = app.auth();
     this.db = app.database();
     this.storage = app.storage();
+    this.analytics = app.analytics();
 
     this.googleProvider = new app.auth.GoogleAuthProvider();
     this.facebookProvider = new app.auth.FacebookAuthProvider();
     this.twitterProvider = new app.auth.TwitterAuthProvider();
   }
 
-  // *** Image API ***
+  // *** Firebase Analytics ***
+  signInEvent = (parameters = {}) =>
+    this.analytics.logEvent('login', parameters);
+
+  signUpEvent = (parameters = {}) =>
+    this.analytics.logEvent('sign_up', parameters);
+
+  searchEvent = (parameters = {}) =>
+    this.analytics.logEvent('search', parameters);
+
+  scrollContestantsEvent = (parameters = {}) =>
+    this.analytics.logEvent('scroll_contestants', parameters);
+
+  // *** Firebase Storage ***
 
   storageRef = () => this.storage.ref();
 
@@ -36,7 +51,7 @@ class Firebase {
 
   userAvatarRef = (uid) => this.usersStorageRef().child(uid).child('avatar');
 
-  // *** Auth API ***
+  // *** Firebase Authentication ***
 
   doCreateUserWithEmailAndPassword = (email, password) =>
     this.auth.createUserWithEmailAndPassword(email, password);
@@ -128,6 +143,7 @@ class Firebase {
   winners = () => this.db.ref('winners');
 
   // *** Voting API ***
+
   voting = () => this.db.ref('voting');
 
   userVoting = (uid) => this.voting().child(uid);

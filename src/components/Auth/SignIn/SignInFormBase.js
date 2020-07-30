@@ -49,6 +49,7 @@ const SignInForm = ({ firebase, history, pathname }) => {
     firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
+        firebase.signInEvent({ method: 'Email' });
         setUser(INITIAL_STATE);
         notifySuccess('Account signed in successfully!');
         history.push(pathname);

@@ -55,6 +55,8 @@ class SignInTwitterBase extends React.Component {
           roles[ROLES.ADMIN] = false;
           roles[ROLES.DEVELOPER] = false;
 
+          firebase.signUpEvent({ method: 'Twitter' });
+
           // Create a user in Firebase Realtime Database.
           return firebase.userPublicInfo(socialAuthUser.user.uid).set({
             fullname: socialAuthUser.user.displayName,
@@ -62,6 +64,8 @@ class SignInTwitterBase extends React.Component {
             picture: socialAuthUser.user.photoURL,
             roles: roles,
           });
+        } else {
+          return firebase.signInEvent({ method: 'Twitter' });
         }
       })
       .then(() => {

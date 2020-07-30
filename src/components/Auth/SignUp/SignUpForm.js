@@ -104,6 +104,7 @@ const SignUpForm = ({ firebase, history, pathname }) => {
               return firebase.doSendEmailVerification();
             })
             .then((_authUser) => {
+              firebase.signUpEvent({ method: 'Email' });
               setUser(INITIAL_STATE);
               notifySuccess('Account created successfully!');
               history.push(ROUTES.HOME);

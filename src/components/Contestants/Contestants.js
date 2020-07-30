@@ -36,16 +36,19 @@ class Contestants extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { firebase, searchText } = this.props;
+
     if (
-      this.props.searchText &&
-      this.props.searchText.trim() !== '' &&
-      this.props.searchText !== prevProps.searchText &&
+      searchText &&
+      searchText.trim() !== '' &&
+      searchText !== prevProps.searchText &&
       !this.state.listEnded
     ) {
       this.setState({ ...this.state, isSearching: true, listEnded: true });
       setTimeout(
         function () {
           this.loadContestants(1000, true);
+          firebase.searchEvent();
         }.bind(this),
         1500
       );
@@ -95,6 +98,7 @@ class Contestants extends React.Component {
         if (this.state.firstTime) {
           this.setState({ ...this.state, firstTime: false });
         } else {
+          firebase.scrollContestantsEvent();
           contestantsList.shift();
         }
 
