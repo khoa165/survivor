@@ -46,7 +46,8 @@
     border: 1px dashed $brand-brown;
   }
 
-  .avatar-placeholder-wrapper {
+  .avatar-placeholder-wrapper,
+  .user-avatar-wrapper {
     padding: 20px;
   }
 
@@ -61,10 +62,6 @@
     background: $brand-brown;
     position: relative;
     margin: auto;
-  }
-
-  .user-avatar-wrapper {
-    padding-top: 20px;
   }
 
   .uploader-user-icon {

@@ -9,13 +9,16 @@ import { compose } from 'recompose';
 import { Container, Row, Col } from 'reactstrap';
 import AccountMenu from './AccountMenu';
 import Profile from './Profile/Profile';
+import Dashboard from './Dashboard';
 
 const AccountPage = () => {
-  const [activeItem, setActiveItem] = useState('Profile');
+  const [activeItem, setActiveItem] = useState('Dashboard');
   const onClick = (itemName) => setActiveItem(itemName);
 
   const renderCorrespondingComponent = (authUser) => {
     switch (activeItem) {
+      case 'Dashboard':
+        return <Dashboard authUser={authUser} />;
       case 'Profile':
         return <Profile authUser={authUser} />;
       case 'Authentication':

@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { withFirebase } from '../../Firebase';
 import { notifyErrors, notifySuccess } from '../../../utils/Toast';
-import { Row, Col, Form, FormGroup, Input, Label, FormText } from 'reactstrap';
+import {
+  Row,
+  Col,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  FormText,
+  Collapse,
+} from 'reactstrap';
 
 const ProfileForm = ({ firebase, currentInfo }) => {
   // Set user profile info.
@@ -15,8 +24,21 @@ const ProfileForm = ({ firebase, currentInfo }) => {
   const currentUsername =
     currentInfo && currentInfo.username ? currentInfo.username : '';
 
+  const [loading, setLoading] = useState(false);
+
   // Destructuring.
   const { username, fullname, bio } = info;
+
+  useEffect(() => {
+    setLoading(true);
+    const timeout = window.setTimeout(() => {
+      setLoading(false);
+    }, 500);
+
+    return () => window.clearTimeout(timeout);
+
+    // eslint-disable-next-line
+  }, []);
 
   const correctUserInput = () => {
     if (!username.match(/^[a-zA-Z0-9]+$/) && username !== '') {
@@ -41,20 +63,21 @@ const ProfileForm = ({ firebase, currentInfo }) => {
     }
 
     const currentUser = firebase.auth.currentUser;
+    const lowercaseUsername = username.toLowerCase();
 
-    if (username !== '') {
+    if (lowercaseUsername !== '') {
       firebase
         .usernames()
         .once('value')
         .then((snapshot) => {
-          return snapshot.exists() && snapshot.child(username).exists()
-            ? snapshot.child(username).val()
+          return snapshot.exists() && snapshot.child(lowercaseUsername).exists()
+            ? snapshot.child(lowercaseUsername).val()
             : false;
         })
         .then((existedUID) => {
           if (!existedUID) {
             // If username not taken yet, add username to list.
-            firebase.usernames().child(username).set(currentUser.uid);
+            firebase.usernames().child(lowercaseUsername).set(currentUser.uid);
 
             // Free previous username.
             if (currentUsername) {
@@ -65,7 +88,7 @@ const ProfileForm = ({ firebase, currentInfo }) => {
             firebase
               .userPublicInfo(currentUser.uid)
               .child('username')
-              .set(username);
+              .set(lowercaseUsername);
 
             setSuccess(true);
           } else {
@@ -97,67 +120,84 @@ const ProfileForm = ({ firebase, currentInfo }) => {
   // Event listener for change in input fields.
   const onChange = (e) => setInfo({ ...info, [e.target.name]: e.target.value });
 
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
+
   return (
-    <Form onSubmit={onSubmit}>
-      <p className='heading-title'>Update profile info</p>
-      <Row form className='align-items-end'>
-        <Col md='6'>
-          <FormGroup className='mb-lg-0'>
-            <Label className='text-brown' for='usernameFields'>
-              Username
-            </Label>
+    !loading &&
+    loading !== null && (
+      <Fragment>
+        <p className='heading-title' onClick={toggle}>
+          {isOpen ? (
+            <i className='fas fa-chevron-down mr-4'></i>
+          ) : (
+            <i className='fas fa-chevron-right mr-4'></i>
+          )}
+          Update profile info
+        </p>
+        <Collapse isOpen={isOpen}>
+          <Form onSubmit={onSubmit}>
+            <Row form className='align-items-end'>
+              <Col md='6'>
+                <FormGroup className='mb-lg-0'>
+                  <Label className='text-brown' for='usernameFields'>
+                    Username
+                  </Label>
+                  <Input
+                    type='text'
+                    name='username'
+                    id='usernameFields'
+                    value={username}
+                    onChange={onChange}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md='6'>
+                <FormGroup className='mb-lg-0'>
+                  <Label className='text-brown' for='fullnameFields'>
+                    Full name
+                  </Label>
+                  <Input
+                    type='text'
+                    name='fullname'
+                    id='fullnameFields'
+                    value={fullname}
+                    onChange={onChange}
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs='12' className='mt-2 mb-4'>
+                <FormText color='muted'>
+                  Adding username and fullname allows other Survivor fans to tag
+                  you and qualifies you for fun trivials/competitions (if any).
+                </FormText>
+              </Col>
+              <Col xs='12'>
+                <FormGroup>
+                  <Label for='bioFields' className='text-brown'>
+                    Bio
+                  </Label>
+                  <Input
+                    type='textarea'
+                    name='bio'
+                    id='bioFields'
+                    value={bio}
+                    onChange={onChange}
+                    placeholder='Show the Survivor world how cool you are'
+                    rows='10'
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
             <Input
-              type='text'
-              name='username'
-              id='usernameFields'
-              value={username}
-              onChange={onChange}
+              type='submit'
+              value='Update profile info'
+              className='btn btn-warning btn-block my-4 submitProfileButton'
             />
-          </FormGroup>
-        </Col>
-        <Col md='6'>
-          <FormGroup className='mb-lg-0'>
-            <Label className='text-brown' for='fullnameFields'>
-              Full name
-            </Label>
-            <Input
-              type='text'
-              name='fullname'
-              id='fullnameFields'
-              value={fullname}
-              onChange={onChange}
-            />
-          </FormGroup>
-        </Col>
-        <Col xs='12' className='mt-2 mb-4'>
-          <FormText color='muted'>
-            Adding username and fullname allows other Survivor fans to tag you
-            and qualifies you for fun trivials/competitions (if any).
-          </FormText>
-        </Col>
-        <Col xs='12'>
-          <FormGroup>
-            <Label for='bioFields' className='text-brown'>
-              Bio
-            </Label>
-            <Input
-              type='textarea'
-              name='bio'
-              id='bioFields'
-              value={bio}
-              onChange={onChange}
-              placeholder='Show the Survivor world how cool you are'
-              rows='10'
-            />
-          </FormGroup>
-        </Col>
-      </Row>
-      <Input
-        type='submit'
-        value='Update profile info'
-        className='btn btn-warning btn-block my-4 submitProfileButton'
-      />
-    </Form>
+          </Form>
+        </Collapse>
+      </Fragment>
+    )
   );
 };
 

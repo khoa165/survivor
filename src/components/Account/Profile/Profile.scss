@@ -7,7 +7,14 @@
     font-size: 24px;
     color: $brand-brown;
     margin: 50px 0 25px 0;
-    border-bottom: 5px solid $brand-brown;
+    border-bottom: 6px solid $brand-brown;
+    padding: 10px 25px;
+    background: linear-gradient(90deg, #f1f1f1 20%, $brand-brown 80%);
+    border-radius: 18px;
+
+    &:hover {
+      background: #e3e3e3;
+    }
   }
 
   .submitProfileButton {

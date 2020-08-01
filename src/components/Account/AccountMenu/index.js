@@ -14,6 +14,14 @@ const AccountMenu = ({ authUser, activeItem, onClick }) => {
         </span>
       </Menu.Item>
       <Menu.Item
+        active={activeItem === 'Dashboard'}
+        onClick={() => {
+          onClick('Dashboard');
+        }}
+      >
+        Dashboard
+      </Menu.Item>
+      <Menu.Item
         active={activeItem === 'Profile'}
         onClick={() => {
           onClick('Profile');

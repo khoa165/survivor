@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ImageUploader from '../../Layout/ImageUploader';
+import AvatarUploader from '../../Layout/ImageUploader';
 import ProfileInfo from './ProfileInfo';
 import { withFirebase } from '../../Firebase';
 import './Profile.scss';
@@ -44,7 +44,7 @@ const Profile = ({ firebase, authUser }) => {
     !loading &&
     loading !== null && (
       <div id='userProfile'>
-        <ImageUploader currentPicture={currentPicture} />
+        <AvatarUploader currentPicture={currentPicture} />
         <ProfileInfo currentInfo={currentInfo} />
       </div>
     )

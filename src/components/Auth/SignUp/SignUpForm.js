@@ -80,11 +80,12 @@ const SignUpForm = ({ firebase, history, pathname }) => {
       return;
     }
 
+    const lowercaseUsername = username.toLowerCase();
     firebase
       .usernames()
       .once('value')
       .then((snapshot) => {
-        if (snapshot.exists() && snapshot.child(username).exists()) {
+        if (snapshot.exists() && snapshot.child(lowercaseUsername).exists()) {
           notifyErrors('Username already taken!');
         } else {
           firebase
@@ -92,9 +93,12 @@ const SignUpForm = ({ firebase, history, pathname }) => {
             .then((authUser) => {
               console.log(authUser);
               // Username not taken yet, add username to list.
-              firebase.usernames().child(username).set(authUser.user.uid);
+              firebase
+                .usernames()
+                .child(lowercaseUsername)
+                .set(authUser.user.uid);
 
-              const data = { username, email, roles };
+              const data = { username: lowercaseUsername, email, roles };
               if (fullname) data.fullname = fullname;
 
               // Create a user in your Firebase realtime database
