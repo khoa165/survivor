@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { withFirebase } from '../../Firebase';
 import { notifySuccess } from '../../../utils/Toast';
-import { Row, Col, Form, FormGroup, Input, Label, Collapse } from 'reactstrap';
+import { Form, FormGroup, Input, Label, Collapse } from 'reactstrap';
 
 const SurvivorRelatedQuestionsForm = ({
   firebase,
@@ -26,7 +26,7 @@ const SurvivorRelatedQuestionsForm = ({
   };
 
   useEffect(() => {
-    setUpdatedAnswers(answers);
+    setUpdatedAnswers(answers ? answers : {});
   }, [answers]);
 
   // Event listener for change in input fields.
@@ -52,28 +52,26 @@ const SurvivorRelatedQuestionsForm = ({
         </p>
         <Collapse isOpen={isOpen}>
           <Form onSubmit={onSubmit}>
-            <Row form className='align-items-end'>
-              {questions &&
-                questions.length > 0 &&
-                questions.map((question, index) => (
-                  <Col xs='12' key={index}>
-                    <FormGroup>
-                      <Label for={`question${index}`} className='text-brown'>
-                        {question.text}
-                      </Label>
-                      <Input
-                        type='textarea'
-                        name={index}
-                        id={`question${index}`}
-                        onChange={onChange}
-                        placeholder={question.placeholder}
-                        rows={question.rows}
-                        value={updatedAnswers[index]}
-                      />
-                    </FormGroup>
-                  </Col>
-                ))}
-            </Row>
+            {questions &&
+              questions.length > 0 &&
+              questions.map((question, index) => (
+                <Fragment key={index}>
+                  <FormGroup>
+                    <Label for={`question${index}`} className='text-brown'>
+                      {question.text}
+                    </Label>
+                    <Input
+                      type='textarea'
+                      name={index}
+                      id={`question${index}`}
+                      onChange={onChange}
+                      placeholder={question.placeholder}
+                      rows={question.rows}
+                      value={updatedAnswers[index]}
+                    />
+                  </FormGroup>
+                </Fragment>
+              ))}
             <Input
               type='submit'
               value='Update Survivor portfolio'

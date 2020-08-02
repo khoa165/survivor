@@ -12,7 +12,7 @@ import Profile from './Profile';
 import Dashboard from './Dashboard';
 
 const AccountPage = () => {
-  const [activeItem, setActiveItem] = useState('Profile');
+  const [activeItem, setActiveItem] = useState('Dashboard');
   const onClick = (itemName) => setActiveItem(itemName);
 
   const renderCorrespondingComponent = (authUser) => {
@@ -40,10 +40,7 @@ const AccountPage = () => {
                 onClick={onClick}
               />
             </Col>
-            <Col lg='9'>
-              {/* <LoginManagement authUser={authUser} /> */}
-              {renderCorrespondingComponent(authUser)}
-            </Col>
+            <Col lg='9'>{renderCorrespondingComponent(authUser)}</Col>
           </Row>
         </Container>
       )}

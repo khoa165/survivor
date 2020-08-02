@@ -22,7 +22,11 @@ const DashboardHeader = ({
         </Col>
         <Col lg='8'>
           <div className='user-basic-info'>
-            <h1 className='user-identifier'>{`${fullname} (@${username})`}</h1>
+            {username ? (
+              <h1 className='user-identifier'>{`${fullname} (@${username})`}</h1>
+            ) : (
+              <h1 className='user-identifier'>{fullname}</h1>
+            )}
             {email ? <p className='user-email'>{`[${email}]`}</p> : null}
             <p className='user-bio'>{bio}</p>
           </div>

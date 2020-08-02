@@ -3,15 +3,18 @@ import { withFirebase } from '../../Firebase';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import Header from './Header';
+import QuestionsAnswersBoard from './QuestionsAnswersBoard';
 import './Dashboard.scss';
 
 const Dashboard = ({ firebase, authUser, match }) => {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState({
+  const [basicInfo, setBasicInfo] = useState({
     username: '',
     fullname: '',
     bio: '',
   });
+  const [questions, setQuestions] = useState({});
+  const [answers, setAnswers] = useState({});
 
   useEffect(() => {
     const uid = match.params.uid ? match.params.id : authUser.uid;
@@ -25,12 +28,28 @@ const Dashboard = ({ firebase, authUser, match }) => {
       const email =
         userData && userData.email && !match.params.uid ? userData.email : '';
       const bio = userData && userData.bio ? userData.bio : '';
-      setData({ picture, username, fullname, email, bio });
+      setBasicInfo({ picture, username, fullname, email, bio });
+      setLoading(false);
+    });
+
+    setLoading(true);
+    firebase.profileQuestions().once('value', (snapshot) => {
+      setQuestions(snapshot.val());
+
+      setLoading(false);
+    });
+
+    setLoading(true);
+    firebase.userProfileAnswers(authUser.uid).once('value', (snapshot) => {
+      setAnswers(snapshot.val() ? snapshot.val() : {});
+
       setLoading(false);
     });
 
     return () => {
-      firebase.userPublicInfo(uid).off();
+      firebase.userPublicInfo(authUser.uid).off();
+      firebase.profileQuestions().off();
+      firebase.userProfileAnswers(authUser.uid);
     };
 
     // eslint-disable-next-line);
@@ -40,7 +59,8 @@ const Dashboard = ({ firebase, authUser, match }) => {
     !loading &&
     loading !== null && (
       <div id='userDashboard'>
-        <Header data={data} />
+        <Header data={basicInfo} />
+        <QuestionsAnswersBoard questions={questions} answers={answers} />
       </div>
     )
   );
