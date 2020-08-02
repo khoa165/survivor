@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
-import Spinner from '../Spinner';
+import { ImageSpinner } from '../Spinner';
 
 const withLoading = (conditionFn) => (Component) => (props) => (
   <Fragment>
     <Component {...props} />
-    {conditionFn(props) && <Spinner />}
+    {conditionFn(props) && <ImageSpinner />}
   </Fragment>
 );
 

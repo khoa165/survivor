@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Slideshow from './Slideshow';
 import { withFirebase } from '../../Firebase';
-import Spinner from '../Spinner';
+import { ImageSpinner } from '../Spinner';
 import WinnerSlideshowItem from './WinnerSlideshowItem';
 
 const WinnersSlideshow = ({ firebase }) => {
@@ -33,7 +33,7 @@ const WinnersSlideshow = ({ firebase }) => {
   }, []);
 
   return loading ? (
-    <Spinner />
+    <ImageSpinner />
   ) : (
     <Slideshow data={winners} SlideshowItem={WinnerSlideshowItem} />
   );

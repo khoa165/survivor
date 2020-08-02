@@ -21,6 +21,9 @@ class Contestants extends React.Component {
       firstTime: true,
       listEnded: false,
       isSearching: false,
+      canVoteGOATs: false,
+      canVoteLegends: false,
+      canVoteFavorites: false,
     };
   }
 
@@ -61,13 +64,19 @@ class Contestants extends React.Component {
 
     const currentUser = firebase.auth.currentUser;
     if (currentUser) {
-      this.getList(userGOATs, currentUser, 'GOATs');
-      this.getList(userLegends, currentUser, 'legends');
-      this.getList(userFavorites, currentUser, 'favorites');
+      this.getList(userGOATs, currentUser, 'GOATs', 'canVoteGOATs', 3);
+      this.getList(userLegends, currentUser, 'legends', 'canVoteLegends', 10);
+      this.getList(
+        userFavorites,
+        currentUser,
+        'favorites',
+        'canVoteFavorites',
+        20
+      );
     }
   };
 
-  getList = async (getFunction, currentUser, listName) => {
+  getList = async (getFunction, currentUser, listName, canVote, maxVotes) => {
     this.setState({ ...this.state, loading: true });
     await getFunction(currentUser.uid).once('value', (snapshot) => {
       const data = snapshot.val();
@@ -76,6 +85,7 @@ class Contestants extends React.Component {
         ...this.state,
         loading: false,
         [listName]: list,
+        [canVote]: snapshot.numChildren() < maxVotes,
       });
     });
   };
@@ -121,6 +131,7 @@ class Contestants extends React.Component {
   };
 
   onIconClick = async (iconNumber, contestantId) => {
+    const { canVoteGOATs, canVoteLegends, canVoteFavorites } = this.state;
     const { firebase } = this.props;
     const {
       voteForGOATs,
@@ -139,21 +150,24 @@ class Contestants extends React.Component {
           voteForGOATs,
           contestantGOATVoteCount,
           currentUser,
-          contestantId
+          contestantId,
+          canVoteGOATs
         );
       } else if (iconNumber === 2) {
         this.voteContestant(
           voteForLegends,
           contestantLegenVoteCount,
           currentUser,
-          contestantId
+          contestantId,
+          canVoteLegends
         );
       } else if (iconNumber === 3) {
         this.voteContestant(
           voteForFavorites,
           contestantFavoriteVoteCount,
           currentUser,
-          contestantId
+          contestantId,
+          canVoteFavorites
         );
       }
     }
@@ -163,18 +177,27 @@ class Contestants extends React.Component {
     voteFunction,
     voteCountFunction,
     currentUser,
-    contestantId
+    contestantId,
+    canVote
   ) => {
     await voteFunction(currentUser.uid, contestantId).once(
       'value',
       (snapshot) => {
         let voteChanged = 0;
         if (snapshot.exists()) {
+          // Un-vote
           voteFunction(currentUser.uid, contestantId).set(null);
           voteChanged = -1;
         } else {
-          voteFunction(currentUser.uid, contestantId).set(true);
-          voteChanged = 1;
+          // Vote
+          if (canVote) {
+            voteFunction(currentUser.uid, contestantId).set(true);
+            voteChanged = 1;
+          } else {
+            notifyErrors(
+              'Please refer to voting rules at the top to see max number of contestants you can cast your votes!'
+            );
+          }
         }
         this.getGOATsLegendsFavorites();
         this.updateVoteCount(voteCountFunction, contestantId, voteChanged);

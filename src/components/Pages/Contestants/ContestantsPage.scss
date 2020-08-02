@@ -1,0 +1,53 @@
+@import '../../../styles/Variables';
+
+#contestantsJumbotron {
+  h1 {
+    color: $brand-brown;
+    font-size: 40px;
+    color: $brand-brown;
+    font-family: 'Lobster', Helvetica, Arial, sans-serif;
+    word-spacing: 5px;
+  }
+
+  .welcome p {
+    font-size: 18px;
+    color: $brand-brown;
+  }
+
+  .votingRules {
+    border-top: 3px solid $brand-brown;
+    border-left: 3px solid $brand-brown;
+    margin-top: 30px;
+    padding: 15px 25px;
+    text-transform: uppercase;
+    color: $brand-brown;
+
+    h3 {
+      font-weight: bold;
+      width: fit-content;
+      border-bottom: 3px solid $brand-brown;
+      margin-bottom: 20px;
+    }
+
+    span {
+      font-weight: bold;
+      margin: 0 5px;
+    }
+  }
+
+  .vote-icon {
+    font-size: 25px;
+
+    &.fa-crown {
+      color: $brand-brown;
+    }
+
+    &.fa-heart {
+      color: $brand-red;
+    }
+
+    &.fa-star {
+      color: $brand-orange;
+    }
+  }
+}

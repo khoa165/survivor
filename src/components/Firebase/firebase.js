@@ -148,20 +148,28 @@ class Firebase {
 
   // *** Voting API ***
 
+  // Firebase path: /voting
   voting = () => this.db.ref('voting');
 
+  // Firebase path: /voting/:uid
   userVoting = (uid) => this.voting().child(uid);
 
+  // Firebase path: /voting/:uid/GOATs
   userGOATs = (uid) => this.userVoting(uid).child('GOATs');
 
+  // Firebase path: /voting/:uid/legends
   userLegends = (uid) => this.userVoting(uid).child('legends');
 
+  // Firebase path: /voting/:uid/favorites
   userFavorites = (uid) => this.userVoting(uid).child('favorites');
 
+  // Firebase path: /voting/:uid/GOATs/:contestant
   voteForGOATs = (uid, contestant) => this.userGOATs(uid).child(contestant);
 
+  // Firebase path: /voting/:uid/legends/:contestant
   voteForLegends = (uid, contestant) => this.userLegends(uid).child(contestant);
 
+  // Firebase path: /voting/:uid/favorites/:contestant
   voteForFavorites = (uid, contestant) =>
     this.userFavorites(uid).child(contestant);
 }

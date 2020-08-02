@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { Table } from 'reactstrap';
-import Spinner from '../Layout/Spinner';
+import { ImageSpinner } from '../Layout/Spinner';
 import './ContestantList.scss';
 
 const colorBasedOnAppearance = (numberSeasons) => {
@@ -33,6 +33,7 @@ const formatSeasonName = (originalSeason, addSpace = false) => {
 
 const ContestantList = ({
   list,
+  loading,
   onIconClick,
   GOATs,
   legends,
@@ -56,8 +57,12 @@ const ContestantList = ({
         <th className='column-5over48 text-center'></th>
       </tr>
     </thead>
-    {isSearching ? (
-      <Spinner />
+    {isSearching && !loading && loading !== null && loading !== undefined ? (
+      <tr className='animatedSpinnerWrapper'>
+        <td colSpan='6'>
+          <ImageSpinner />
+        </td>
+      </tr>
     ) : (
       <tbody>
         {list &&
