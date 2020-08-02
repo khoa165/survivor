@@ -1,19 +1,39 @@
-@import '../../../styles/Variables.scss';
+@import '../../../styles/Variables';
+@import '../../../styles/HelperMethods';
 
 #userProfile {
+  .forms {
+    margin-top: 50px;
+    margin-bottom: 30px;
+
+    @include resize(null, $md-max) {
+      margin-top: 30px;
+    }
+  }
+
   .heading-title {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 24px;
     color: $brand-brown;
-    margin: 50px 0 25px 0;
+    margin: 30px 0 25px 0;
     border-bottom: 6px solid $brand-brown;
     padding: 10px 25px;
-    background: linear-gradient(90deg, #f1f1f1 20%, $brand-brown 80%);
+    background: linear-gradient(
+      90deg,
+      #f1f1f1 10%,
+      $brand-with-opacity-brown 80%
+    );
     border-radius: 18px;
 
     &:hover {
       background: #e3e3e3;
+    }
+
+    @include resize(null, $md-max) {
+      font-size: 14px;
+      padding: 10px 15px;
+      margin: 15px 0;
     }
   }
 
@@ -23,5 +43,6 @@
     border-radius: 5px;
     text-transform: uppercase;
     font-weight: bold;
+    margin-bottom: 70px;
   }
 }

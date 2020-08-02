@@ -124,6 +124,10 @@ class Firebase {
 
   usernames = () => this.db.ref('usernames');
 
+  profileQuestions = () => this.db.ref('profile_questions');
+
+  userProfileAnswers = (uid) => this.user(uid).child('profile_answers');
+
   // *** Survivor API ***
 
   contestants = () => this.db.ref('contestants');

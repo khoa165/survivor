@@ -11,15 +11,11 @@ const AvatarUploader = ({ firebase, currentPicture }) => {
   const [imageAsUrl, setImageAsUrl] = useState(null);
 
   useEffect(() => {
-    const timeout = window.setTimeout(() => {
-      if (currentPicture) {
-        setImageAsUrl(currentPicture);
-      } else {
-        setImageAsUrl('');
-      }
-    }, 500);
-
-    return () => window.clearTimeout(timeout);
+    if (currentPicture) {
+      setImageAsUrl(currentPicture);
+    } else {
+      setImageAsUrl('');
+    }
 
     // eslint-disable-next-line
   }, []);
@@ -93,8 +89,11 @@ const AvatarUploader = ({ firebase, currentPicture }) => {
 
   return (
     currentPicture !== null &&
+    currentPicture !== undefined &&
     selectedFile !== null &&
-    imageAsUrl !== null && (
+    selectedFile !== undefined &&
+    imageAsUrl !== null &&
+    imageAsUrl !== undefined && (
       <div className='image-uploader'>
         <div className='image-area'>
           {selectedFile ? (

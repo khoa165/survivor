@@ -8,11 +8,11 @@ import {
 import { compose } from 'recompose';
 import { Container, Row, Col } from 'reactstrap';
 import AccountMenu from './AccountMenu';
-import Profile from './Profile/Profile';
+import Profile from './Profile';
 import Dashboard from './Dashboard';
 
 const AccountPage = () => {
-  const [activeItem, setActiveItem] = useState('Dashboard');
+  const [activeItem, setActiveItem] = useState('Profile');
   const onClick = (itemName) => setActiveItem(itemName);
 
   const renderCorrespondingComponent = (authUser) => {

@@ -36,6 +36,11 @@
     font-weight: bold;
   }
 
+  .user-identifier,
+  .user-email {
+    text-align: center;
+  }
+
   p {
     font-size: 18px;
     color: $brand-brown;
