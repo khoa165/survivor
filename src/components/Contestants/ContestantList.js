@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
-import { Table, Button } from 'reactstrap';
+import { Table } from 'reactstrap';
 import { ImageSpinner } from '../Layout/Spinner';
 import './ContestantList.scss';
 

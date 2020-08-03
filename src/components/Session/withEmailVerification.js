@@ -1,7 +1,7 @@
 import React from 'react';
-
 import AuthUserContext from './context';
 import { withFirebase } from '../Firebase';
+import SendConfirmation from '../Layout/SendConfirmation';
 
 const withEmailVerification = (Component) => {
   class WithEmailVerification extends React.Component {
@@ -18,22 +18,26 @@ const withEmailVerification = (Component) => {
     };
 
     needsEmailVerification = (authUser) => {
-      authUser &&
+      const result =
+        authUser &&
         !authUser.emailVerified &&
         authUser.providerData
           .map((provider) => provider.providerId)
           .includes('password');
+      return result;
     };
 
     hasEmailVerifiedField = (authUser) => {
+      let result = false;
       authUser &&
         this.props.firebase
-          .user(authUser.uid)
+          .userPublicInfo(authUser.uid)
           .once('value')
           .then((snapshot) => {
             const dbUser = snapshot.val();
-            return dbUser.emailVerified;
+            result = dbUser.emailVerified ? true : false;
           });
+      return result;
     };
 
     render() {
@@ -42,29 +46,11 @@ const withEmailVerification = (Component) => {
           {(authUser) => {
             return this.needsEmailVerification(authUser) &&
               !this.hasEmailVerifiedField(authUser) ? (
-              <div>
-                {this.state.isSent ? (
-                  <p>
-                    E-Mail confirmation sent: Check you E-Mails (Spam folder
-                    included) for a confirmation E-Mail. Refresh this page once
-                    you confirmed your E-Mail.
-                  </p>
-                ) : (
-                  <p>
-                    Verify your E-Mail: Check you E-Mails (Spam folder included)
-                    for a confirmation E-Mail or send another confirmation
-                    E-Mail.
-                  </p>
-                )}
-
-                <button
-                  type='button'
-                  onClick={this.onSendEmailVerification}
-                  disabled={this.state.isSent}
-                >
-                  Send confirmation E-Mail
-                </button>
-              </div>
+              <SendConfirmation
+                isSent={this.state.isSent}
+                onSendEmailVerification={this.onSendEmailVerification}
+                authUser={authUser}
+              />
             ) : (
               <Component {...this.props} />
             );

@@ -3,16 +3,21 @@
 #notFoundPages {
   margin-top: 25vh;
   h1 {
-    $c1: #16c5ed;
-    $c2: #16c5ee;
-    $c3: #16c5ef;
-    $c4: #16c5ff;
+    $c1: #a66838;
+    $c2: #a66839;
+    $c3: #a6683a;
+    $c4: #a6684a;
 
-    color: white;
+    color: #f0f0f0;
     text-shadow: $c1 1px 1px, $c1 2px 2px, $c1 3px 3px, $c2 4px 4px, $c2 5px 5px,
       $c2 6px 6px, $c2 7px 7px, $c3 8px 8px, $c4 9px 9px, $c4 10px 10px,
       $c4 11px 11px;
   }
+
+  p {
+    color: $brand-brown;
+  }
+
   .btn-primary {
     background: $brand-brown;
     border-color: $brand-brown;

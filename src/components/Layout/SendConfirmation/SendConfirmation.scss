@@ -1,0 +1,33 @@
+@import '../../../styles/Variables';
+
+#sendConfirmation {
+  text-align: center;
+  width: 95vw;
+  max-width: 500px;
+  margin: 30px auto;
+  border: 10px solid $brand-brown;
+
+  #jeff-image {
+    width: 80vw;
+    max-width: 380px;
+    margin: 20px 0;
+  }
+
+  p {
+    width: 80vw;
+    max-width: 400px;
+    color: $brand-brown;
+    font-size: 18px;
+    margin: auto;
+    text-align: left;
+
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .btn {
+    margin: 30px 0;
+    padding: 10px;
+  }
+}

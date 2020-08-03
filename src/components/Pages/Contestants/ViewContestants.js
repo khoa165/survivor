@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { Container, Jumbotron } from 'reactstrap';
+import { withEmailVerification, withAuthorization } from '../../Session';
+import { compose } from 'recompose';
 import { Contestants, ContestantSearch } from '../../Contestants';
 import './ContestantsPage.scss';
 
@@ -51,4 +53,8 @@ const ViewContestants = () => {
   );
 };
 
-export default ViewContestants;
+const condition = (authUser) => !!authUser;
+export default compose(
+  withEmailVerification,
+  withAuthorization(condition)
+)(ViewContestants);

@@ -52,7 +52,7 @@ const Dashboard = ({ firebase, authUser, match }) => {
       firebase.userProfileAnswers(authUser.uid);
     };
 
-    // eslint-disable-next-line);
+    // eslint-disable-next-line
   }, []);
 
   return (
