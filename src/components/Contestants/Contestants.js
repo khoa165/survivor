@@ -24,6 +24,9 @@ class Contestants extends React.Component {
       canVoteGOATs: false,
       canVoteLegends: false,
       canVoteFavorites: false,
+      viewingGOATs: false,
+      viewingLegends: false,
+      viewingFavorites: false,
     };
   }
 
@@ -47,11 +50,12 @@ class Contestants extends React.Component {
       searchText !== prevProps.searchText &&
       !this.state.listEnded
     ) {
-      this.setState({ ...this.state, isSearching: true, listEnded: true });
+      this.setState({ ...this.state, isSearching: true });
       setTimeout(
         function () {
           this.loadContestants(1000, true);
           firebase.searchEvent();
+          this.setState({ ...this.state, listEnded: true });
         }.bind(this),
         1500
       );
@@ -92,45 +96,86 @@ class Contestants extends React.Component {
 
   loadContestants = async (loadSize = this.state.loadSize, bigload = false) => {
     const { firebase } = this.props;
-    this.setState({ ...this.state, loading: true });
-    await firebase
-      .contestants()
-      .orderByKey()
-      .startAt(this.state.lastFetched)
-      .limitToFirst(loadSize)
-      .once('value', (snapshot) => {
-        const contestantsObject = snapshot.val();
-        const contestantsList = Object.keys(contestantsObject).map((key) => ({
-          ...contestantsObject[key],
-          id: key,
-        }));
 
-        if (this.state.firstTime) {
-          this.setState({ ...this.state, firstTime: false });
-        } else {
-          firebase.scrollContestantsEvent();
-          contestantsList.shift();
-        }
+    if (!this.state.listEnded) {
+      this.setState({ ...this.state, loading: true });
+      await firebase
+        .contestants()
+        .orderByKey()
+        .startAt(this.state.lastFetched)
+        .limitToFirst(loadSize)
+        .once('value', (snapshot) => {
+          const contestantsObject = snapshot.val();
+          const contestantsList = Object.keys(contestantsObject).map((key) => ({
+            ...contestantsObject[key],
+            id: key,
+          }));
 
-        const length = contestantsList.length;
-        if (length > 0) {
-          this.setState({
-            ...this.state,
-            loading: false,
-            lastFetched: contestantsList[length - 1].id,
-            contestants: this.state.contestants.concat(contestantsList),
-          });
-        } else {
-          this.setState({ ...this.state, loading: false, listEnded: true });
-        }
+          if (this.state.firstTime) {
+            this.setState({ ...this.state, firstTime: false });
+          } else {
+            firebase.scrollContestantsEvent();
+            contestantsList.shift();
+          }
 
-        if (bigload) {
-          this.setState({ ...this.state, isSearching: false });
-        }
-      });
+          const length = contestantsList.length;
+          if (length > 0) {
+            this.setState({
+              ...this.state,
+              loading: false,
+              lastFetched: contestantsList[length - 1].id,
+              contestants: this.state.contestants.concat(contestantsList),
+            });
+          } else {
+            this.setState({ ...this.state, loading: false, listEnded: true });
+          }
+
+          if (bigload) {
+            this.setState({ ...this.state, isSearching: false });
+          }
+        });
+    }
   };
 
-  onIconClick = async (iconNumber, contestantId) => {
+  onViewContestantsByGroup = (iconNumber) => {
+    const { firebase } = this.props;
+    const {
+      listEnded,
+      loading,
+      viewingGOATs,
+      viewingLegends,
+      viewingFavorites,
+    } = this.state;
+    const currentUser = firebase.auth.currentUser;
+    if (!currentUser) {
+      notifyErrors('You have to login to see contestants you have voted!', 5);
+    } else {
+      const currentViewingGOATs = iconNumber === 1 && !viewingGOATs;
+      const currentViewingLegends = iconNumber === 2 && !viewingLegends;
+      const currentViewingFavorites = iconNumber === 3 && !viewingFavorites;
+      const isSearching = !listEnded && !loading;
+      this.setState({
+        ...this.state,
+        viewingGOATs: currentViewingGOATs,
+        viewingLegends: currentViewingLegends,
+        viewingFavorites: currentViewingFavorites,
+        isSearching,
+      });
+
+      if (!listEnded && !loading) {
+        setTimeout(
+          function () {
+            this.loadContestants(1000, true);
+            firebase.searchEvent();
+            this.setState({ ...this.state, listEnded: true });
+          }.bind(this),
+          1500
+        );
+      }
+    }
+  };
+
+  onIconClick = (iconNumber, contestantId) => {
     const { canVoteGOATs, canVoteLegends, canVoteFavorites } = this.state;
     const { firebase } = this.props;
     const {
@@ -217,16 +262,40 @@ class Contestants extends React.Component {
   };
 
   filterContestants = () => {
-    if (this.props.searchText) {
-      return this.state.contestants.filter((contestant) => {
-        const regex = new RegExp(this.props.searchText, 'gi');
-        return (
-          contestant.basicInfo.name.match(regex) ||
-          contestant.basicInfo.originalSeasonName.match(regex)
-        );
+    const {
+      viewingGOATs,
+      viewingLegends,
+      viewingFavorites,
+      contestants,
+      GOATs,
+      legends,
+      favorites,
+    } = this.state;
+
+    if (viewingGOATs) {
+      return contestants.filter((contestant) => {
+        return GOATs.includes(contestant.id);
+      });
+    } else if (viewingLegends) {
+      return contestants.filter((contestant) => {
+        return legends.includes(contestant.id);
+      });
+    } else if (viewingFavorites) {
+      return contestants.filter((contestant) => {
+        return favorites.includes(contestant.id);
       });
     } else {
-      return this.state.contestants;
+      if (this.props.searchText) {
+        return this.state.contestants.filter((contestant) => {
+          const regex = new RegExp(this.props.searchText, 'gi');
+          return (
+            contestant.basicInfo.name.match(regex) ||
+            contestant.basicInfo.originalSeasonName.match(regex)
+          );
+        });
+      } else {
+        return this.state.contestants;
+      }
     }
   };
 
@@ -239,22 +308,29 @@ class Contestants extends React.Component {
       GOATs,
       legends,
       favorites,
+      viewingGOATs,
+      viewingLegends,
+      viewingFavorites,
     } = this.state;
 
-    let filtered = this.filterContestants();
+    let filteredSearch = this.filterContestants();
 
     return (
       <InfiniteScrollList
         className='p-0'
-        list={filtered}
+        list={filteredSearch}
         loading={loading}
         listEnded={listEnded}
         onScroll={this.loadContestants}
         onIconClick={this.onIconClick}
+        onViewContestantsByGroup={this.onViewContestantsByGroup}
         GOATs={GOATs}
         legends={legends}
         favorites={favorites}
         isSearching={isSearching}
+        viewingGOATs={viewingGOATs}
+        viewingLegends={viewingLegends}
+        viewingFavorites={viewingFavorites}
       />
     );
   }

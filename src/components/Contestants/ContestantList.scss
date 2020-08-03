@@ -71,16 +71,10 @@
     }
   }
 
-  tr.animatedSpinnerWrapper {
-    height: 150px;
-    padding-top: 50px;
-    padding-bottom: 50px;
-
-    td {
-      height: 150px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-    }
+  .table-header-button:hover,
+  .table-header-button.clicked {
+    background-color: $brand-grey;
+    transform: scale(1.05);
   }
 }
 

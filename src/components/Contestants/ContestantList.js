@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
-import { Table } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 import { ImageSpinner } from '../Layout/Spinner';
 import './ContestantList.scss';
 
@@ -35,23 +35,42 @@ const ContestantList = ({
   list,
   loading,
   onIconClick,
+  onViewContestantsByGroup,
   GOATs,
   legends,
   favorites,
   isSearching,
+  viewingGOATs,
+  viewingLegends,
+  viewingFavorites,
 }) => (
   <Table striped hover className='mt-4' id='contestantList'>
     <thead className='thead-dark'>
       <tr>
         <th className='column-7over12-lg-1over3 pl-3 pl-md-4'>Contestants</th>
         <th className='column-none-lg-7over18'></th>
-        <th className='column-5over48 text-center'>
+        <th
+          className={`column-5over48 text-center table-header-button ${
+            viewingGOATs ? 'clicked' : ''
+          }`}
+          onClick={() => onViewContestantsByGroup(1)}
+        >
           <i className='fas fa-crown'></i>
         </th>
-        <th className='column-5over48 text-center'>
+        <th
+          className={`column-5over48 text-center table-header-button ${
+            viewingLegends ? 'clicked' : ''
+          }`}
+          onClick={() => onViewContestantsByGroup(2)}
+        >
           <i className='fas fa-star'></i>
         </th>
-        <th className='column-5over48 text-center'>
+        <th
+          className={`column-5over48 text-center table-header-button ${
+            viewingFavorites ? 'clicked' : ''
+          }`}
+          onClick={() => onViewContestantsByGroup(3)}
+        >
           <i className='fas fa-heart'></i>
         </th>
         <th className='column-5over48 text-center'></th>
