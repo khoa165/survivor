@@ -13,7 +13,7 @@ const UserRoutes = () => {
       <Route exact path={ROUTES.ACCOUNT} component={AccountPage} />
 
       <Route exact path={ROUTES.VIEW_CONTESTANTS} component={ViewContestants} />
-      <Route exact path={ROUTES.VIEW_CONTESTANT} component={ViewContestants} />
+      <Route exact path={ROUTES.VIEW_CONTESTANT} component={ViewContestant} />
     </Fragment>
   );
 };
